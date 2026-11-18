@@ -1,0 +1,679 @@
+[
+ [
+  {
+   "id": 1,
+   "tier": "T1 clean quote",
+   "pass": true,
+   "critical": false,
+   "spec_errors": [],
+   "errors": [],
+   "got": {
+    "status": "ready",
+    "product": "im_professional",
+    "year1_total": 10080.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 10080.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 2,
+   "tier": "T1 clean quote",
+   "pass": true,
+   "critical": false,
+   "spec_errors": [],
+   "errors": [],
+   "got": {
+    "status": "ready",
+    "product": "im_professional",
+    "year1_total": 3600.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 3600.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 3,
+   "tier": "T1 clean quote",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "product: got 'platform_essential', expected 'platform_plus'",
+    "approvers: got [], expected ['sales_manager']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['ALTERNATIVE_TIER', 'DISCOUNT', 'TIER_RECOMMENDED']",
+    "year1_total: got 11040.0, expected 44160",
+    "contract_total: got 11040.0, expected 44160"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 11040.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 11040.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 4,
+   "tier": "T1 clean quote",
+   "pass": true,
+   "critical": false,
+   "spec_errors": [],
+   "errors": [],
+   "got": {
+    "status": "ready",
+    "product": "platform_plus",
+    "year1_total": 48000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 96000.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 5,
+   "tier": "T1 clean quote",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['ALTERNATIVE_TIER', 'TIER_RECOMMENDED']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 12000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 12000.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 6,
+   "tier": "T1 clean quote",
+   "pass": false,
+   "critical": false,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['sales_manager']",
+    "flags: got [], expected ['DISCOUNT']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "im_professional",
+    "year1_total": 17955.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 17955.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 7,
+   "tier": "T1 clean quote",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "product: got 'platform_essential', expected 'platform_plus'",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['TIER_RECOMMENDED']",
+    "year1_total: got 12000.0, expected 48000",
+    "contract_total: got 12000.0, expected 48000"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 12000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 12000.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 8,
+   "tier": "T2 approvals and terms",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['sales_manager', 'deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['DISCOUNT']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_plus",
+    "year1_total": 39360.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 39360.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 9,
+   "tier": "T2 approvals and terms",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['sales_manager', 'deal_desk', 'finance']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['DISCOUNT', 'PAYMENT_TERMS']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 9000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 9000.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 10,
+   "tier": "T2 approvals and terms",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['sales_manager', 'deal_desk', 'finance', 'cro']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['DISCOUNT', 'PRICE_LOCK']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "im_professional",
+    "year1_total": 32760.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 98280.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 11,
+   "tier": "T2 approvals and terms",
+   "pass": false,
+   "critical": false,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['sales_manager']",
+    "flags: got [], expected ['DISCOUNT']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 10800.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 10800.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 12,
+   "tier": "T2 approvals and terms",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['finance']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['PAYMENT_TERMS']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "im_professional",
+    "year1_total": 7560.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 7560.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 13,
+   "tier": "T2 approvals and terms",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['sales_manager', 'deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['DISCOUNT']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 10740.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 10740.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 14,
+   "tier": "T3 price-book trap",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'blocked'",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['SEAT_CAP']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_starter",
+    "year1_total": 2800.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 2800.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 15,
+   "tier": "T3 price-book trap",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'blocked'",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['PLATFORM_MONTHLY']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 12000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 12000.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 16,
+   "tier": "T3 price-book trap",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['CREDITS_NEEDED', 'PROMO_EXPIRED']",
+    "credits: got [], expected [None]"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_plus",
+    "year1_total": 48000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 48000.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 17,
+   "tier": "T3 price-book trap",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['PROMO_APPLIED']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_plus",
+    "year1_total": 48000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 48000.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 18,
+   "tier": "T3 price-book trap",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['CREDITS_NEEDED']",
+    "credits: got [], expected [None]"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 12000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 12000.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 19,
+   "tier": "T3 price-book trap",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['CREDITS_NEEDED', 'CUSTOM_TIER']",
+    "credits: got [], expected [None]"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_ultimate",
+    "year1_total": null,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": null,
+    "credits": []
+   }
+  },
+  {
+   "id": 20,
+   "tier": "T3 price-book trap",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['LEGACY_PLAN']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": null,
+    "year1_total": null,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": null,
+    "credits": []
+   }
+  },
+  {
+   "id": 21,
+   "tier": "T3 price-book trap",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'blocked'",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['FREE_OVER_LIMIT']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "im_free",
+    "year1_total": 0.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 0.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 22,
+   "tier": "T3 price-book trap",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['UNPRICED_SKU']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "im_professional",
+    "year1_total": 6300.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 6300.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 23,
+   "tier": "T3 price-book trap",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['BONUS_SEATS_RELIED']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_starter",
+    "year1_total": 2800.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 2800.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 24,
+   "tier": "T4 missing input",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_info'",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['MISSING_SEATS']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "im_professional",
+    "year1_total": null,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": null,
+    "credits": []
+   }
+  },
+  {
+   "id": 25,
+   "tier": "T4 missing input",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_info'",
+    "approvers: got [], expected ['sales_manager']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['DISCOUNT', 'MISSING_PRODUCT']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": null,
+    "year1_total": null,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": null,
+    "credits": []
+   }
+  },
+  {
+   "id": 26,
+   "tier": "T5 other wording (added after review)",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['sales_manager', 'deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['DISCOUNT']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 10200.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 10200.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 27,
+   "tier": "T5 other wording (added after review)",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['CREDITS_NEEDED']",
+    "credits: got [], expected [None]"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_plus",
+    "year1_total": 48000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 48000.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 28,
+   "tier": "T5 other wording (added after review)",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['LEGACY_MIGRATION']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 12000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 12000.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 29,
+   "tier": "T5 other wording (added after review)",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_approval'",
+    "approvers: got [], expected ['deal_desk']",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['BONUS_SEATS_RELIED', 'CREDITS_NEEDED']",
+    "credits: got [], expected [80]"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_starter",
+    "year1_total": 2800.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 2800.0,
+    "credits": []
+   }
+  },
+  {
+   "id": 30,
+   "tier": "T5 other wording (added after review)",
+   "pass": false,
+   "critical": true,
+   "spec_errors": [],
+   "errors": [
+    "status: got 'ready', expected 'needs_info'",
+    "auto_approve_eligible: got True, expected False",
+    "flags: got [], expected ['UNPARSED']"
+   ],
+   "got": {
+    "status": "ready",
+    "product": "platform_plus",
+    "year1_total": 48000.0,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 48000.0,
+    "credits": []
+   }
+  }
+ ]
+]

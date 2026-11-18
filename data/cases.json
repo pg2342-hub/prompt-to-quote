@@ -1,0 +1,736 @@
+{
+ "as_of": "2026-11-18",
+ "cases": [
+  {
+   "id": 1,
+   "tier": "T1 clean quote",
+   "prompt": "Quote Northwind Freight 40 Professional users, annual billing, list price.",
+   "gold_spec": {
+    "product": "im_professional",
+    "users": 40
+   },
+   "expected": {
+    "status": "ready",
+    "product": "im_professional",
+    "year1_total": 10080,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 10080,
+    "credits": []
+   }
+  },
+  {
+   "id": 2,
+   "tier": "T1 clean quote",
+   "prompt": "Brightline Health wants Professional for 12 users, billed monthly.",
+   "gold_spec": {
+    "product": "im_professional",
+    "users": 12,
+    "billing": "monthly"
+   },
+   "expected": {
+    "status": "ready",
+    "product": "im_professional",
+    "year1_total": 3600,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 3600,
+    "credits": []
+   }
+  },
+  {
+   "id": 3,
+   "tier": "T1 clean quote",
+   "prompt": "Move Beacon Retail onto the Reliability Platform: 22 responders and 6 stakeholders, about 18,000 events a year, 8% off, closing Dec 12.",
+   "gold_spec": {
+    "product": "platform",
+    "users": 22,
+    "stakeholders": 6,
+    "events_year": 18000,
+    "discount_pct": 8,
+    "close_date": "2026-12-12"
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_plus",
+    "year1_total": 44160,
+    "approvers": [
+     "sales_manager"
+    ],
+    "flags": [
+     "TIER_RECOMMENDED",
+     "ALTERNATIVE_TIER",
+     "DISCOUNT"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 44160,
+    "credits": []
+   }
+  },
+  {
+   "id": 4,
+   "tier": "T1 clean quote",
+   "prompt": "Kestrel Payments: Plus, 44 users, 90k events a year, close Dec 19, 2 year term at list.",
+   "gold_spec": {
+    "product": "platform_plus",
+    "users": 44,
+    "events_year": 90000,
+    "term_years": 2,
+    "close_date": "2026-12-19"
+   },
+   "expected": {
+    "status": "ready",
+    "product": "platform_plus",
+    "year1_total": 48000,
+    "approvers": [],
+    "flags": [],
+    "auto_approve_eligible": true,
+    "contract_total": 96000,
+    "credits": []
+   }
+  },
+  {
+   "id": 5,
+   "tier": "T1 clean quote",
+   "prompt": "Reliability Platform for Pinecrest Apps, 14 users, about 3,000 events a year, annual.",
+   "gold_spec": {
+    "product": "platform",
+    "users": 14,
+    "events_year": 3000
+   },
+   "expected": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 12000,
+    "approvers": [],
+    "flags": [
+     "TIER_RECOMMENDED",
+     "ALTERNATIVE_TIER"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 12000,
+    "credits": []
+   }
+  },
+  {
+   "id": 6,
+   "tier": "T1 clean quote",
+   "prompt": "Orbit Mobility, Professional, 75 users, annual, 5% off.",
+   "gold_spec": {
+    "product": "im_professional",
+    "users": 75,
+    "discount_pct": 5
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "im_professional",
+    "year1_total": 17955,
+    "approvers": [
+     "sales_manager"
+    ],
+    "flags": [
+     "DISCOUNT"
+    ],
+    "auto_approve_eligible": true,
+    "contract_total": 17955,
+    "credits": []
+   }
+  },
+  {
+   "id": 7,
+   "tier": "T1 clean quote",
+   "prompt": "Quote the Reliability Platform for Lumen Analytics: 30 responders plus 10 stakeholders, around 60,000 events a year, annual, close Dec 15.",
+   "gold_spec": {
+    "product": "platform",
+    "users": 30,
+    "stakeholders": 10,
+    "events_year": 60000,
+    "close_date": "2026-12-15"
+   },
+   "expected": {
+    "status": "ready",
+    "product": "platform_plus",
+    "year1_total": 48000,
+    "approvers": [],
+    "flags": [
+     "TIER_RECOMMENDED"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 48000,
+    "credits": []
+   }
+  },
+  {
+   "id": 8,
+   "tier": "T2 approvals and terms",
+   "prompt": "Halcyon Bank: Plus, 50 users, annual, 18% discount, close Dec 22.",
+   "gold_spec": {
+    "product": "platform_plus",
+    "users": 50,
+    "discount_pct": 18,
+    "close_date": "2026-12-22"
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_plus",
+    "year1_total": 39360,
+    "approvers": [
+     "sales_manager",
+     "deal_desk"
+    ],
+    "flags": [
+     "DISCOUNT"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 39360,
+    "credits": []
+   }
+  },
+  {
+   "id": 9,
+   "tier": "T2 approvals and terms",
+   "prompt": "Granite Retail, Essential for 20 users, 25% off, net 60, closing Jan 9.",
+   "gold_spec": {
+    "product": "platform_essential",
+    "users": 20,
+    "discount_pct": 25,
+    "payment_terms_days": 60,
+    "close_date": "2027-01-09"
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_essential",
+    "year1_total": 9000,
+    "approvers": [
+     "sales_manager",
+     "deal_desk",
+     "finance"
+    ],
+    "flags": [
+     "DISCOUNT",
+     "PAYMENT_TERMS"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 9000,
+    "credits": []
+   }
+  },
+  {
+   "id": 10,
+   "tier": "T2 approvals and terms",
+   "prompt": "Professional for 200 users at Vantage Media, annual, 35% off for a 3 year deal with price locked.",
+   "gold_spec": {
+    "product": "im_professional",
+    "users": 200,
+    "discount_pct": 35,
+    "term_years": 3,
+    "price_lock": true
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "im_professional",
+    "year1_total": 32760,
+    "approvers": [
+     "sales_manager",
+     "deal_desk",
+     "finance",
+     "cro"
+    ],
+    "flags": [
+     "DISCOUNT",
+     "PRICE_LOCK"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 98280,
+    "credits": []
+   }
+  },
+  {
+   "id": 11,
+   "tier": "T2 approvals and terms",
+   "prompt": "Corvid Security: Essential, 10 users, 10% discount, annual.",
+   "gold_spec": {
+    "product": "platform_essential",
+    "users": 10,
+    "discount_pct": 10
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_essential",
+    "year1_total": 10800,
+    "approvers": [
+     "sales_manager"
+    ],
+    "flags": [
+     "DISCOUNT"
+    ],
+    "auto_approve_eligible": true,
+    "contract_total": 10800,
+    "credits": []
+   }
+  },
+  {
+   "id": 12,
+   "tier": "T2 approvals and terms",
+   "prompt": "Meridian Foods Professional 30 users annual net 45.",
+   "gold_spec": {
+    "product": "im_professional",
+    "users": 30,
+    "payment_terms_days": 45
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "im_professional",
+    "year1_total": 7560,
+    "approvers": [
+     "finance"
+    ],
+    "flags": [
+     "PAYMENT_TERMS"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 7560,
+    "credits": []
+   }
+  },
+  {
+   "id": 13,
+   "tier": "T2 approvals and terms",
+   "prompt": "Atlas Robotics Essential 25 seats annual 10.5% discount.",
+   "gold_spec": {
+    "product": "platform_essential",
+    "users": 25,
+    "discount_pct": 10.5
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_essential",
+    "year1_total": 10740,
+    "approvers": [
+     "sales_manager",
+     "deal_desk"
+    ],
+    "flags": [
+     "DISCOUNT"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 10740,
+    "credits": []
+   }
+  },
+  {
+   "id": 14,
+   "tier": "T3 price-book trap",
+   "prompt": "Starter for Ridgeway Logistics, 26 responders and 8 stakeholders.",
+   "gold_spec": {
+    "product": "platform_starter",
+    "users": 26,
+    "stakeholders": 8
+   },
+   "expected": {
+    "status": "blocked",
+    "product": "platform_starter",
+    "year1_total": 2800,
+    "approvers": [],
+    "flags": [
+     "SEAT_CAP"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": null,
+    "credits": []
+   }
+  },
+  {
+   "id": 15,
+   "tier": "T3 price-book trap",
+   "prompt": "Essential for Quill Software, 15 users, billed monthly.",
+   "gold_spec": {
+    "product": "platform_essential",
+    "users": 15,
+    "billing": "monthly"
+   },
+   "expected": {
+    "status": "blocked",
+    "product": "platform_essential",
+    "year1_total": 12000,
+    "approvers": [],
+    "flags": [
+     "PLATFORM_MONTHLY"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": null,
+    "credits": []
+   }
+  },
+  {
+   "id": 16,
+   "tier": "T3 price-book trap",
+   "prompt": "Plus for Harbor Insurance, 40 users, 30,000 AI Actions a year, closing Feb 3, 2027.",
+   "gold_spec": {
+    "product": "platform_plus",
+    "users": 40,
+    "ai_actions_year": 30000,
+    "close_date": "2027-02-03"
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_plus",
+    "year1_total": 48000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "flags": [
+     "PROMO_EXPIRED",
+     "CREDITS_NEEDED"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 48000,
+    "credits": [
+     null
+    ]
+   }
+  },
+  {
+   "id": 17,
+   "tier": "T3 price-book trap",
+   "prompt": "Plus for Cobalt Energy, 40 users, 30,000 AI Actions a year, closing Dec 30.",
+   "gold_spec": {
+    "product": "platform_plus",
+    "users": 40,
+    "ai_actions_year": 30000,
+    "close_date": "2026-12-30"
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_plus",
+    "year1_total": 48000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "flags": [
+     "PROMO_APPLIED"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 48000,
+    "credits": []
+   }
+  },
+  {
+   "id": 18,
+   "tier": "T3 price-book trap",
+   "prompt": "Essential for Kite Data, 20 users, about 40,000 events a year, annual.",
+   "gold_spec": {
+    "product": "platform_essential",
+    "users": 20,
+    "events_year": 40000
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_essential",
+    "year1_total": 12000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "flags": [
+     "CREDITS_NEEDED"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 12000,
+    "credits": [
+     null
+    ]
+   }
+  },
+  {
+   "id": 19,
+   "tier": "T3 price-book trap",
+   "prompt": "Ultimate for Sterling Telecom, 600 users.",
+   "gold_spec": {
+    "product": "platform_ultimate",
+    "users": 600
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_ultimate",
+    "year1_total": null,
+    "approvers": [
+     "deal_desk"
+    ],
+    "flags": [
+     "CUSTOM_TIER",
+     "CREDITS_NEEDED"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": null,
+    "credits": [
+     null
+    ]
+   }
+  },
+  {
+   "id": 20,
+   "tier": "T3 price-book trap",
+   "prompt": "Renew Wexford Media on their Business plan, 60 users.",
+   "gold_spec": {
+    "legacy_plan": "business",
+    "users": 60
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": null,
+    "year1_total": null,
+    "approvers": [
+     "deal_desk"
+    ],
+    "flags": [
+     "LEGACY_PLAN"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": null,
+    "credits": []
+   }
+  },
+  {
+   "id": 21,
+   "tier": "T3 price-book trap",
+   "prompt": "Free plan for Juniper Co, 8 users.",
+   "gold_spec": {
+    "product": "im_free",
+    "users": 8
+   },
+   "expected": {
+    "status": "blocked",
+    "product": "im_free",
+    "year1_total": null,
+    "approvers": [],
+    "flags": [
+     "FREE_OVER_LIMIT"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": null,
+    "credits": []
+   }
+  },
+  {
+   "id": 22,
+   "tier": "T3 price-book trap",
+   "prompt": "Professional for 25 users at Alder Systems, annual, plus AIOps.",
+   "gold_spec": {
+    "product": "im_professional",
+    "users": 25,
+    "addons": [
+     "aiops"
+    ]
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "im_professional",
+    "year1_total": 6300,
+    "approvers": [
+     "deal_desk"
+    ],
+    "flags": [
+     "UNPRICED_SKU"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 6300,
+    "credits": []
+   }
+  },
+  {
+   "id": 23,
+   "tier": "T3 price-book trap",
+   "prompt": "Starter for Fennel Health, 8 responders, annual.",
+   "gold_spec": {
+    "product": "platform_starter",
+    "users": 8
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_starter",
+    "year1_total": 2800,
+    "approvers": [
+     "deal_desk"
+    ],
+    "flags": [
+     "BONUS_SEATS_RELIED"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 2800,
+    "credits": []
+   }
+  },
+  {
+   "id": 24,
+   "tier": "T4 missing input",
+   "prompt": "Put together a quote for Larkspur AI on Professional, annual.",
+   "gold_spec": {
+    "product": "im_professional"
+   },
+   "expected": {
+    "status": "needs_info",
+    "product": "im_professional",
+    "year1_total": null,
+    "approvers": [],
+    "flags": [
+     "MISSING_SEATS"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": null,
+    "credits": []
+   }
+  },
+  {
+   "id": 25,
+   "tier": "T4 missing input",
+   "prompt": "Quote Osprey Cloud 30 users, 10% off.",
+   "gold_spec": {
+    "users": 30,
+    "discount_pct": 10
+   },
+   "expected": {
+    "status": "needs_info",
+    "product": null,
+    "year1_total": null,
+    "approvers": [
+     "sales_manager"
+    ],
+    "flags": [
+     "MISSING_PRODUCT",
+     "DISCOUNT"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": null,
+    "credits": []
+   }
+  },
+  {
+   "id": 26,
+   "tier": "T5 other wording (added after review)",
+   "prompt": "Essential for Foo Corp, 20 users, discount of 15%",
+   "gold_spec": {
+    "product": "platform_essential",
+    "users": 20,
+    "discount_pct": 15
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_essential",
+    "year1_total": 10200,
+    "approvers": [
+     "sales_manager",
+     "deal_desk"
+    ],
+    "flags": [
+     "DISCOUNT"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 10200,
+    "credits": []
+   }
+  },
+  {
+   "id": 27,
+   "tier": "T5 other wording (added after review)",
+   "prompt": "Plus for Big Co, 45 users, 1.5M events a year",
+   "gold_spec": {
+    "product": "platform_plus",
+    "users": 45,
+    "events_year": 1500000
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_plus",
+    "year1_total": 48000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "flags": [
+     "CREDITS_NEEDED"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 48000,
+    "credits": [
+     null
+    ]
+   }
+  },
+  {
+   "id": 28,
+   "tier": "T5 other wording (added after review)",
+   "prompt": "Renewal: move Delta Freight from Business to Essential, 22 users, closing Dec 18",
+   "gold_spec": {
+    "product": "platform_essential",
+    "legacy_plan": "business",
+    "users": 22,
+    "close_date": "2026-12-18"
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_essential",
+    "year1_total": 12000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "flags": [
+     "LEGACY_MIGRATION"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 12000,
+    "credits": []
+   }
+  },
+  {
+   "id": 29,
+   "tier": "T5 other wording (added after review)",
+   "prompt": "Starter for Qux Media, 12 users",
+   "gold_spec": {
+    "product": "platform_starter",
+    "users": 12
+   },
+   "expected": {
+    "status": "needs_approval",
+    "product": "platform_starter",
+    "year1_total": 2800,
+    "approvers": [
+     "deal_desk"
+    ],
+    "flags": [
+     "BONUS_SEATS_RELIED",
+     "CREDITS_NEEDED"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 2800,
+    "credits": [
+     80
+    ]
+   }
+  },
+  {
+   "id": 30,
+   "tier": "T5 other wording (added after review)",
+   "prompt": "Plus for Baz Health, 40 users, some discount TBD",
+   "gold_spec": {
+    "product": "platform_plus",
+    "users": 40,
+    "unparsed": [
+     "a discount"
+    ]
+   },
+   "expected": {
+    "status": "needs_info",
+    "product": "platform_plus",
+    "year1_total": null,
+    "approvers": [],
+    "flags": [
+     "UNPARSED"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": null,
+    "credits": []
+   }
+  }
+ ]
+}

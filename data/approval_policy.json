@@ -1,0 +1,20 @@
+{
+  "note": "EXAMPLE policy. PagerDuty's real discount and approval rules are not public; deal desk replaces this file in week 1 of a pilot.",
+  "discount_bands": [
+    {"max_pct": 0, "approvers": []},
+    {"max_pct": 10, "approvers": ["sales_manager"]},
+    {"max_pct": 20, "approvers": ["sales_manager", "deal_desk"]},
+    {"max_pct": 30, "approvers": ["sales_manager", "deal_desk", "finance"]},
+    {"max_pct": 100, "approvers": ["sales_manager", "deal_desk", "finance", "cro"]}
+  ],
+  "standard_payment_terms_days": 30,
+  "nonstandard_terms": {
+    "payment_terms_over_standard": ["finance"],
+    "multi_year_price_lock": ["deal_desk"],
+    "unpriced_sku": ["deal_desk"],
+    "legacy_plan": ["deal_desk"],
+    "custom_tier": ["deal_desk"],
+    "credits_rate_needed": ["deal_desk"]
+  },
+  "auto_approve_after_pilot_month_1": "A quote auto-approves when its only approver is sales_manager (discount of 10% or less) and it carries no route, check, block, or ask flags; informational flags are allowed."
+}

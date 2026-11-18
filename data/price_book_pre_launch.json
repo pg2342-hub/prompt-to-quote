@@ -1,0 +1,87 @@
+{
+  "vendor": "PagerDuty",
+  "version": "pre-launch (2026-11-02 capture)",
+  "source": "Reconstructed: the 2026-11-03 book with every field that pricingsaas.com recorded as changed between its Nov 2 and Nov 9, 2026 captures set back to its Nov 2 value (Starter 10 seats with no bonus, Essential 20 seats, 40,000 events, and 4,000 AI Actions, Ultimate 2,000,000 events and 100,000 AI Actions, no promotion; pricingsaas.com/companies/pagerduty/diffs/2026W46). Fields not reported as changed are assumed unchanged. The tracker's change log (pricingsaas.com/companies/pagerduty, week of Nov 2) also says 'Starter also gains a new 30-seat cap', but the diff page does not list it, so the pre-launch cap is unknown; this book keeps it at 30.",
+  "products": {
+    "im_free": {
+      "name": "Incident Management Free",
+      "family": "incident_management",
+      "price_per_user_month": {
+        "annual": 0,
+        "monthly": 0
+      },
+      "max_users": 5
+    },
+    "im_professional": {
+      "name": "Incident Management Professional",
+      "family": "incident_management",
+      "price_per_user_month": {
+        "annual": 21,
+        "monthly": 25
+      }
+    },
+    "platform_starter": {
+      "name": "PD Reliability Platform Starter",
+      "family": "platform",
+      "platform_fee_year": 2800,
+      "seats_included": 10,
+      "bonus_seats": 0,
+      "bonus_note": "Limited-time bonus of 5 seats; confirm it is still offered on the signing date",
+      "extra_seat_credits": 40,
+      "seat_cap": 30,
+      "events_year": 5000,
+      "ai_actions_year": 1000
+    },
+    "platform_essential": {
+      "name": "PD Reliability Platform Essential",
+      "family": "platform",
+      "platform_fee_year": 12000,
+      "seats_included": 20,
+      "seat_cap": null,
+      "events_year": 40000,
+      "ai_actions_year": 4000
+    },
+    "platform_plus": {
+      "name": "PD Reliability Platform Plus",
+      "family": "platform",
+      "platform_fee_year": 48000,
+      "seats_included": 50,
+      "seat_cap": null,
+      "events_year": 150000,
+      "ai_actions_year": 16000
+    },
+    "platform_ultimate": {
+      "name": "PD Reliability Platform Ultimate",
+      "family": "platform",
+      "platform_fee_year": null,
+      "custom_pricing": true,
+      "seats_included": 500,
+      "seat_cap": null,
+      "events_year": 2000000,
+      "ai_actions_year": 100000
+    }
+  },
+  "unpriced_skus": {
+    "aiops": "AIOps (on sale or renewal; no public price)",
+    "advance": "PagerDuty Advance (on sale or renewal; no public price)",
+    "lcr_addon": "Live Call Routing add-on for Professional (no public price)",
+    "status_pages": "Status Pages add-on (no public price)",
+    "runbook_automation": "Runbook Automation (no public price)"
+  },
+  "legacy_plans": [
+    "business",
+    "enterprise",
+    "operations_cloud"
+  ],
+  "rules": {
+    "platform_billing": "annual_upfront_only",
+    "seats_include_stakeholders": true,
+    "credits_public_price": null,
+    "credits_note": "Credits buy extra seats, events, and AI Actions. PagerDuty does not publish a price per credit, so the quote shows credit quantities only where the book gives them (40 credits per extra Starter seat) and leaves the rate to deal desk.",
+    "ai_actions_promo": {
+      "tiers": [],
+      "sign_by": "2027-01-15",
+      "text": "No promotion in this version"
+    }
+  }
+}

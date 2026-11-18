@@ -1,0 +1,207 @@
+{
+ "note": "Phrasings two independent reviews typed after the 30 test deals were built, which the rules interpreter first got wrong or asked about needlessly. The interpreter was then fixed against them, so they are a regression check, not a held-out score. Each must either ask the rep (needs_info) or give the quote shown.",
+ "checks": [
+  {
+   "prompt": "Essential for Acme, 20 users, $2,000 off",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, payment net sixty",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Essential for Acme, 20 users plus 10 stakeholder licenses",
+   "expect": {
+    "status": "needs_approval",
+    "product": "platform_essential",
+    "year1_total": 12000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "auto_approve_eligible": false
+   }
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, 3,000 events per day",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, 8% discount, and another 7% if they sign by Dec 15",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, 8% discount on year 1 and 15% on years 2-3, 3-year",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, 24-month term",
+   "expect": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 12000,
+    "contract_total": 24000,
+    "approvers": [],
+    "auto_approve_eligible": true
+   }
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, 3 yr deal",
+   "expect": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 12000,
+    "contract_total": 36000,
+    "approvers": [],
+    "auto_approve_eligible": true
+   }
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, billed quarterly",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Upgrade Acme from Starter to Essential, 20 users",
+   "expect": {
+    "status": "ready",
+    "product": "platform_essential",
+    "year1_total": 12000,
+    "approvers": [],
+    "auto_approve_eligible": true
+   }
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, events about 40k a year",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Professional for Acme, 20 users, knock 15 off",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, 30k agent actions",
+   "expect": {
+    "status": "needs_approval",
+    "product": "platform_essential",
+    "year1_total": 12000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "auto_approve_eligible": false
+   }
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, 8,000 agent actions a year",
+   "expect": {
+    "status": "needs_approval",
+    "product": "platform_essential",
+    "year1_total": 12000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "auto_approve_eligible": false
+   }
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, with Process Automation and Jeli",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Professional for Acme, 20 users, 10,000 AI Actions a year",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Renewal for Cask Systems, they are on Enterprise today, 40 users, want to move to Plus",
+   "expect": {
+    "status": "needs_approval",
+    "year1_total": 48000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "auto_approve_eligible": false,
+    "product": "platform_plus"
+   }
+  },
+  {
+   "prompt": "Cask Systems is currently on Business, quote Essential for 20 users",
+   "expect": {
+    "status": "needs_approval",
+    "year1_total": 12000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "auto_approve_eligible": false,
+    "product": "platform_essential"
+   }
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, they are an Operations Cloud customer today",
+   "expect": {
+    "status": "needs_approval",
+    "year1_total": 12000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "auto_approve_eligible": false,
+    "product": "platform_essential"
+   }
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, first year free",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Essential for Acme 20 users net 30 annual, waive the platform fee",
+   "expect": "needs_info"
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, 3-year with locked pricing, 5% off",
+   "expect": {
+    "status": "needs_approval",
+    "year1_total": 11400,
+    "approvers": [
+     "sales_manager",
+     "deal_desk"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 34200
+   }
+  },
+  {
+   "prompt": "Essential for Acme, 20 users, 3 year term, pricing locked",
+   "expect": {
+    "status": "needs_approval",
+    "year1_total": 12000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "auto_approve_eligible": false,
+    "contract_total": 36000
+   }
+  },
+  {
+   "prompt": "Hey can you quote Sable Logistics on Essentail, 18 responders and 5 stakeholders, annual, 12% off, close 12/20",
+   "expect": {
+    "status": "needs_approval",
+    "year1_total": 10560,
+    "approvers": [
+     "sales_manager",
+     "deal_desk"
+    ],
+    "auto_approve_eligible": false,
+    "product": "platform_essential"
+   }
+  },
+  {
+   "prompt": "Move Northwind from Professional (40 users) to Essential",
+   "expect": {
+    "status": "needs_approval",
+    "year1_total": 12000,
+    "approvers": [
+     "deal_desk"
+    ],
+    "auto_approve_eligible": false,
+    "product": "platform_essential"
+   }
+  }
+ ]
+}
