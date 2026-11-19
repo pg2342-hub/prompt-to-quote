@@ -178,7 +178,7 @@ const EXAMPLES = [
   ["Reliability Platform for Pinecrest Apps, 14 users, about 3,000 events a year, annual.", "picks a tier"],
   ["Professional for 200 users at Vantage Media, annual, 35% off for a 3 year deal with price locked.", "big discount"]
 ];
-const FILES = ["quoter/__init__.py","quoter/engine.py","quoter/interpret.py","data/price_book.json","data/approval_policy.json"];
+const FILES = ["quoter/engine.py","quoter/interpret.py","data/price_book.json","data/approval_policy.json"];
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const money = n => n == null ? "" : "$" + Number(n).toLocaleString("en-US", {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2});
@@ -201,6 +201,7 @@ async function boot(){
   try{
     py = await loadPyodide();
     py.FS.mkdirTree("/app/quoter"); py.FS.mkdirTree("/app/data");
+    py.FS.writeFile("/app/quoter/__init__.py", "");
     for (const f of FILES){
       const r = await fetch(f, {cache: "no-cache"});
       if (!r.ok) throw new Error("Could not load " + f);
