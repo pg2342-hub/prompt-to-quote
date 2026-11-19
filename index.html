@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt to Quote</title>
+<meta name="description" content="Type a deal in plain English and get a priced quote from PagerDuty's public price book, with the approvals it needs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single working column. The demo comes first, then how it works, the results, and the limits. */
+:root{
+  --bg:#f6f7f5; --surface:#ffffff; --fg:#1a1e1c; --muted:#5b645f; --line:#dce1dd;
+  --accent:#1f6f5c; --accent-fg:#ffffff; --accent-soft:#e2efea; --code:#eef1ee;
+  --ok:#1f7a4d; --route:#9a5b00; --block:#b3261e; --ask:#2d5bb5; --info:#5b645f;
+  --display:"Space Grotesk",Inter,system-ui,sans-serif; --body:Inter,system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#121513; --surface:#1a1e1c; --fg:#e6eae7; --muted:#9aa49f; --line:#2b322e;
+  --accent:#5cc2a6; --accent-fg:#0e1a16; --accent-soft:#1c2d28; --code:#212724;
+  --ok:#6fd19b; --route:#e3a34a; --block:#ef7b73; --ask:#8fb0f0; --info:#9aa49f; color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 var(--body)}
+.wrap{max-width:980px;margin:0 auto;padding:28px max(16px,env(safe-area-inset-left)) 64px max(16px,env(safe-area-inset-right))}
+a{color:var(--accent)}
+code{font-family:var(--mono);font-size:.92em}
+header{display:flex;flex-direction:column;gap:6px;margin-bottom:22px}
+.eyebrow{font:500 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:600 34px/1.1 var(--display);margin:0;text-wrap:balance}
+.lede{max-width:68ch;color:var(--muted);margin:4px 0 0;font-size:16px}
+.links{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;margin-top:6px}
+h2{font:600 21px/1.25 var(--display);margin:0 0 12px;text-wrap:balance}
+section{margin-top:40px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+label{font-weight:600;font-size:14px;display:block;margin-bottom:6px}
+textarea{width:100%;min-height:76px;resize:vertical;font:15px/1.5 var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+button{font:500 14px var(--body);cursor:pointer;border-radius:8px}
+.go{background:var(--accent);color:var(--accent-fg);border:0;padding:9px 18px}
+.go:disabled{opacity:.55;cursor:progress}
+.go:focus-visible,.ex:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.loadmsg{font-size:13px;color:var(--muted)}
+.examples{margin-top:14px}
+.examples .lab{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.exlist{display:flex;flex-wrap:wrap;gap:6px}
+.ex{background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:5px 10px;font-size:13px;text-align:left}
+.ex:hover{border-color:var(--accent)}
+.ex small{color:var(--muted);margin-left:4px}
+.out{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px;margin-top:14px}
+@media (max-width:760px){.out{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.card h3{font:600 13px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.cust{font:600 18px var(--display)}
+.pill{font:600 12px var(--mono);padding:3px 10px;border-radius:999px;border:1px solid currentColor;text-transform:uppercase;letter-spacing:.03em}
+.s-ready{color:var(--ok)} .s-needs_approval{color:var(--route)} .s-blocked{color:var(--block)} .s-needs_info{color:var(--ask)}
+.lines{width:100%;border-collapse:collapse;font-size:14px}
+.lines td{padding:8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.lines td.amt{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;padding-left:12px}
+.src{display:block;font:12px var(--mono);color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
+.totals{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0 4px}
+.totals div{min-width:120px}
+.totals b{display:block;font:600 20px var(--display);font-variant-numeric:tabular-nums}
+.totals span{font-size:12px;color:var(--muted)}
+.nototal{font-size:14px;color:var(--muted);margin:10px 0}
+.flags{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.flags li{font-size:14px;display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:baseline}
+.sev{font:500 11px var(--mono);padding:1px 7px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.sev-info{color:var(--info)} .sev-check,.sev-route{color:var(--route)} .sev-block{color:var(--block)} .sev-ask{color:var(--ask)}
+.code{font:12.5px/1.5 var(--mono);color:var(--muted)}
+.code b{color:var(--fg);font-weight:500}
+.credits{font-size:14px;margin-top:10px}
+.appr{margin-top:12px;font-size:14px;display:flex;gap:16px;flex-wrap:wrap}
+.appr b{font-weight:600}
+.spec{font:12.5px/1.6 var(--mono);margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.spec .k{color:var(--muted)}
+.spec .nul{color:var(--muted);opacity:.7}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+.placeholder{color:var(--muted);font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:440px){.steps{grid-template-columns:1fr}}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;min-width:0}
+.step .n{font:500 12px var(--mono);color:var(--accent)}
+.step h3{font:600 15px var(--body);margin:4px 0 6px}
+.step p{margin:0;font-size:14px;color:var(--muted)}
+.rule{max-width:72ch;margin-top:14px}
+.tbl{overflow-x:auto}
+table.res{border-collapse:collapse;width:100%;font-size:14px}
+.res th,.res td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.res th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.res td.n{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+ul.lim{margin:0;padding-left:20px;max-width:75ch} ul.lim li{margin-bottom:6px}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Demo · PagerDuty public price book, November 3, 2026</div>
+  <h1>Prompt to Quote</h1>
+  <p class="lede">Describe a deal the way a rep would. The interpreter turns your words into a deal record, and a separate pricing engine prices that record from PagerDuty's public price book, checks it against an example approval policy, and routes it. The interpreter never sees a price. Anything the book can't price, or any term it can't read, goes to deal desk or back to the rep instead of being guessed.</p>
+  <div class="links"><a href="https://github.com/pg2342-hub/prompt-to-quote">Source on GitHub</a><a href="#how">How it works</a><a href="#results">Test results</a><a href="#limits">Limits</a></div>
+</header>
+
+<div class="panel">
+  <label for="prompt">Deal description</label>
+  <textarea id="prompt" spellcheck="false">Essential for Kite Data, 20 users, about 40,000 events a year, annual.</textarea>
+  <div class="row">
+    <button class="go" id="go" type="button" disabled>Quote it</button>
+    <span class="loadmsg" id="loadmsg" role="status">Loading Python in your browser (about 10 seconds the first time)…</span>
+  </div>
+  <div class="examples">
+    <div class="lab">Try one</div>
+    <div class="exlist" id="exlist"></div>
+  </div>
+</div>
+
+<div class="out" id="out" aria-live="polite">
+  <div class="card" id="quotecard"><h3>Quote</h3><p class="placeholder">The quote appears here.</p></div>
+  <div class="card" id="speccard"><h3>Deal record the interpreter extracted</h3><p class="placeholder">This is all the pricing engine sees.</p></div>
+</div>
+
+<section id="how">
+  <h2>How it works</h2>
+  <div class="steps">
+    <div class="step"><span class="n">1 · interpret</span><h3>Words to fields</h3><p>Plan, users, stakeholders, billing, term, discount, payment terms, price lock, close date, events, AI Actions, add-ons. A term it can't read goes on an unparsed list.</p></div>
+    <div class="step"><span class="n">2 · price</span><h3>Fields to dollars</h3><p>Prices come only from <code>data/price_book.json</code>, and every line cites the entry it came from. A new price book changes prices without a code change.</p></div>
+    <div class="step"><span class="n">3 · check</span><h3>Book and policy rules</h3><p>Starter's 30-seat cap, stakeholders counting as seats, annual-upfront billing, bonus seats, the AI Actions promotion deadline, discount bands, payment terms, price locks.</p></div>
+    <div class="step"><span class="n">4 · route</span><h3>Status and approvers</h3><p>Ready, needs approval, blocked, or needs info. A quote could approve on its own only at 10% off or less with nothing but informational flags.</p></div>
+  </div>
+  <p class="rule">Flags carry a severity: <span class="sev sev-info">info</span> <span class="sev sev-check">check</span> a person confirms, <span class="sev sev-route">route</span> adds an approver, <span class="sev sev-block">block</span> can't be quoted as asked, <span class="sev sev-ask">ask</span> the rep needs to supply or restate something. Blocked and needs-info quotes show no total, so nobody can forward a number that isn't real. This page runs the offline rules interpreter; the repo also has a Claude interpreter that fills the same record through a strict tool call.</p>
+</section>
+
+<section id="results">
+  <h2>Test results</h2>
+  <div class="tbl"><table class="res">
+    <thead><tr><th>Check</th><th>Result</th><th>What it shows</th></tr></thead>
+    <tbody>
+      <tr><td>30 hand-checked deals, rules interpreter + engine</td><td class="n">30 of 30</td><td>Zero critical errors. 10 of the deals are price-book traps. The go-live gate is 29 of 30 with no critical errors.</td></tr>
+      <tr><td>Engine alone, on hand-written deal records</td><td class="n">30 of 30</td><td>The pricing and routing are right independent of the interpreter.</td></tr>
+      <tr><td>List price times quantity</td><td class="n">3 of 30</td><td>A floor, not a competitor. It shows the cases test more than multiplication.</td></tr>
+      <tr><td>Price-book change, before vs. at launch</td><td class="n">7 of 30 move</td><td>A 20-user Essential deal at 40,000 events fit before November 3 and needs credits for 15,000 events after.</td></tr>
+      <tr><td>15 fresh deals written by an outside reviewer</td><td class="n">0 wrong</td><td>5 priced correctly and 10 asked the rep. Too many asks for a product, but the right direction to err.</td></tr>
+      <tr><td>25 tricky phrasings found in review</td><td class="n">25 of 25</td><td>A regression check. The parser was fixed against these, so it isn't a held-out score.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="limits">
+  <h2>Limits</h2>
+  <ul class="lim">
+    <li>The rules interpreter is a regex written with the test prompts in view. Unusual wording usually gets a request to restate rather than a price. The Claude interpreter is the intended path and hasn't been run against the test set yet.</li>
+    <li>The approval policy is an example. PagerDuty's real discount rules aren't public.</li>
+    <li>PagerDuty doesn't publish a price per credit, so quotes show credit quantities and leave the rate to deal desk.</li>
+    <li>Terms that change by year (ramps, stepped discounts) aren't modeled yet; the demo asks the rep instead.</li>
+    <li>No CRM write-back and no order form.</li>
+  </ul>
+</section>
+
+<footer>Prices from pagerduty.com/pricing (amounts as of November 3, 2026). The approval policy and every customer name are invented. Not affiliated with PagerDuty or Roadrunner. Built by Pranav Gudise.</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script>
+const EXAMPLES = [
+  ["Essential for Kite Data, 20 users, about 40,000 events a year, annual.", "credits needed"],
+  ["Plus for Halcyon Bank, 50 users, 18% discount, net 60, close Dec 22", "approvals"],
+  ["Starter for Pike & Co, 34 users", "seat cap"],
+  ["Essential for Quill Software, 15 users, billed monthly.", "annual only"],
+  ["Plus for Cobalt Energy, 40 users, 30,000 AI Actions a year, closing Dec 30.", "promotion"],
+  ["Cask Systems is currently on Business, quote Essential for 20 users", "older plan"],
+  ["Essential for Acme, 20 users, first year free", "asks the rep"],
+  ["Reliability Platform for Pinecrest Apps, 14 users, about 3,000 events a year, annual.", "picks a tier"],
+  ["Professional for 200 users at Vantage Media, annual, 35% off for a 3 year deal with price locked.", "big discount"]
+];
+const FILES = ["quoter/__init__.py","quoter/engine.py","quoter/interpret.py","data/price_book.json","data/approval_policy.json"];
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const money = n => n == null ? "" : "$" + Number(n).toLocaleString("en-US", {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2});
+const NAMES = {im_free:"Incident Management Free", im_professional:"Incident Management Professional", platform_starter:"Reliability Platform Starter", platform_essential:"Reliability Platform Essential", platform_plus:"Reliability Platform Plus", platform_ultimate:"Reliability Platform Ultimate"};
+const STATUS = {ready:"Ready", needs_approval:"Needs approval", blocked:"Blocked", needs_info:"Needs info"};
+const APPROVER = {sales_manager:"Sales manager", deal_desk:"Deal desk", finance:"Finance", cro:"CRO"};
+
+const exlist = $("#exlist");
+EXAMPLES.forEach(([p, tag]) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "ex";
+  b.innerHTML = esc(p.length > 58 ? p.slice(0, 56) + "…" : p) + "<small>" + esc(tag) + "</small>";
+  b.title = p;
+  b.addEventListener("click", () => { $("#prompt").value = p; run(); });
+  exlist.appendChild(b);
+});
+
+let py = null;
+async function boot(){
+  try{
+    py = await loadPyodide();
+    py.FS.mkdirTree("/app/quoter"); py.FS.mkdirTree("/app/data");
+    for (const f of FILES){
+      const r = await fetch(f, {cache: "no-cache"});
+      if (!r.ok) throw new Error("Could not load " + f);
+      py.FS.writeFile("/app/" + f, await r.text());
+    }
+    py.runPython(`
+import sys, json
+sys.path.insert(0, "/app")
+from quoter.engine import build_quote
+from quoter.interpret import RulesInterpreter
+_interp = RulesInterpreter()
+def quote_json(prompt):
+    spec = _interp(prompt)
+    q = build_quote(spec)
+    return json.dumps({"spec": spec.__dict__, "quote": q.to_dict()})
+`);
+    $("#loadmsg").textContent = "Ready. Runs entirely in your browser.";
+    $("#go").disabled = false;
+    run();
+  }catch(e){
+    $("#loadmsg").textContent = "Python failed to load: " + e.message + ". Reload the page, or run quote.py from the repo.";
+  }
+}
+
+function renderQuote(spec, q){
+  const name = spec.customer || "(customer not named)";
+  let h = `<h3>Quote</h3><div class="qhead"><span class="cust">${esc(name)}</span><span class="pill s-${q.status}">${STATUS[q.status] || q.status}</span></div>`;
+  if (q.product) h += `<div class="code">Plan: <b>${esc(NAMES[q.product] || q.product)}</b></div>`;
+  if (q.lines.length){
+    h += `<table class="lines"><tbody>` + q.lines.map(l =>
+      `<tr><td>${esc(l.description)}<span class="src">${esc(l.qty)} × ${money(l.unit_price)} per ${esc(l.unit)} · ${esc(l.source)}</span></td><td class="amt">${money(l.amount_year)}/yr</td></tr>`).join("") + `</tbody></table>`;
+  }
+  if (q.year1_total != null){
+    const yrs = q.contract_total && q.year1_total ? Math.round(q.contract_total / q.year1_total) : 1;
+    h += `<div class="totals"><div><b>${money(q.year1_total)}</b><span>Year 1${q.discount_pct ? " after " + q.discount_pct + "% off" : ""}</span></div><div><b>${money(q.contract_total)}</b><span>Contract (${yrs} yr)</span></div></div>`;
+  } else {
+    h += `<p class="nototal">No total shown: ${q.status === "blocked" ? "the deal can't be quoted as asked" : q.status === "needs_info" ? "the rep needs to answer the question below first" : "deal desk sets part of the price"}.</p>`;
+  }
+  if (q.credits.length){
+    h += `<div class="credits"><b>Credits:</b> ` + q.credits.map(c => esc(c.reason) + (c.credits != null ? ` (${c.credits} credits)` : "")).join("; ") + `. PagerDuty doesn't publish a credit rate, so deal desk sets it.</div>`;
+  }
+  if (q.flags.length){
+    h += `<ul class="flags">` + q.flags.map(f => `<li><span class="sev sev-${f.severity}">${f.severity}</span><span>${esc(f.message)} <span class="code">${esc(f.code)}</span></span></li>`).join("") + `</ul>`;
+  }
+  const appr = q.approvers.length ? q.approvers.map(a => APPROVER[a] || a).join(", ") : "None";
+  h += `<div class="appr"><span><b>Approvers:</b> ${esc(appr)}</span><span><b>Could auto-approve after pilot month 1:</b> ${q.auto_approve_eligible ? "Yes" : "No"}</span></div>`;
+  return h;
+}
+
+function renderSpec(spec){
+  const order = ["customer","product","legacy_plan","users","stakeholders","billing","term_years","discount_pct","payment_terms_days","price_lock","close_date","events_year","ai_actions_year","addons","unparsed"];
+  const lines = order.filter(k => k in spec).map(k => {
+    const v = spec[k];
+    const shown = v === null ? `<span class="nul">null</span>` : esc(JSON.stringify(v));
+    return `<span class="k">${k}:</span> ${shown}`;
+  });
+  return `<h3>Deal record the interpreter extracted</h3><pre class="spec">${lines.join("\n")}</pre><p class="note">This is all the pricing engine sees. There are no prices in it.</p>`;
+}
+
+function run(){
+  if (!py) return;
+  const p = $("#prompt").value.trim();
+  if (!p) return;
+  try{
+    const res = JSON.parse(py.globals.get("quote_json")(p));
+    $("#quotecard").innerHTML = renderQuote(res.spec, res.quote);
+    $("#speccard").innerHTML = renderSpec(res.spec);
+  }catch(e){
+    $("#quotecard").innerHTML = `<h3>Quote</h3><p class="placeholder">Something went wrong reading that deal: ${esc(e.message.split("\n").slice(-2).join(" "))}</p>`;
+  }
+}
+$("#go").addEventListener("click", run);
+$("#prompt").addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) run(); });
+boot();
+</script>
+</body>
+</html>

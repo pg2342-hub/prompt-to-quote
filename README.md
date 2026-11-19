@@ -4,6 +4,8 @@ A small working version of the pilot in `Roadrunner_PagerDuty_Pilot_Plan.pdf`: a
 
 All prices come from pagerduty.com/pricing. The approval policy is an example, because PagerDuty's real discount rules are not public, and every customer name is invented. Nothing here comes from PagerDuty's or Roadrunner's systems.
 
+**Try it in your browser:** https://pg2342-hub.github.io/prompt-to-quote/ (runs the rules interpreter and the engine in the page with Pyodide; nothing is sent anywhere).
+
 ## Run it
 
 ```
