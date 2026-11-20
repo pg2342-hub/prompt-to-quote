@@ -1,6 +1,6 @@
 # Prompt to quote on PagerDuty's public price book
 
-A small working version of the pilot in `Roadrunner_PagerDuty_Pilot_Plan.pdf`: a rep describes a deal in plain English, and the pipeline returns a priced quote, the approvals it needs, and anything it cannot price, using only PagerDuty's public price book (amounts as of November 3, 2026, the day the PD Reliability Platform became generally available) and an example approval policy.
+A small working version of a pilot plan I wrote (a separate PDF, not in this repo): a rep describes a deal in plain English, and the pipeline returns a priced quote, the approvals it needs, and anything it cannot price, using only PagerDuty's public price book (amounts as of November 3, 2026, the day the PD Reliability Platform became generally available) and an example approval policy.
 
 All prices come from pagerduty.com/pricing. The approval policy is an example, because PagerDuty's real discount rules are not public, and every customer name is invented. Nothing here comes from PagerDuty's or Roadrunner's systems.
 
