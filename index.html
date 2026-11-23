@@ -1,104 +1,86 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- demo-chrome --><meta name="theme-color" content="#f4f2ec"><link rel="icon" href="https://pranavgudise.dev/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="https://pranavgudise.dev/kit/demo.css"><!-- /demo-chrome -->
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prompt to Quote</title>
 <meta name="description" content="Type a deal in plain English and get a priced quote from PagerDuty's public price book, with the approvals it needs.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a single working column. The demo comes first, then how it works, the results, and the limits. */
-:root{
-  --bg:#f6f7f5; --surface:#ffffff; --fg:#1a1e1c; --muted:#5b645f; --line:#dce1dd;
-  --accent:#1f6f5c; --accent-fg:#ffffff; --accent-soft:#e2efea; --code:#eef1ee;
-  --ok:#1f7a4d; --route:#9a5b00; --block:#b3261e; --ask:#2d5bb5; --info:#5b645f;
-  --display:"Space Grotesk",Inter,system-ui,sans-serif; --body:Inter,system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
-  color-scheme:light;
-}
-@media (prefers-color-scheme: dark){:root{
-  --bg:#121513; --surface:#1a1e1c; --fg:#e6eae7; --muted:#9aa49f; --line:#2b322e;
-  --accent:#5cc2a6; --accent-fg:#0e1a16; --accent-soft:#1c2d28; --code:#212724;
-  --ok:#6fd19b; --route:#e3a34a; --block:#ef7b73; --ask:#8fb0f0; --info:#9aa49f; color-scheme:dark}}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 var(--body)}
-.wrap{max-width:980px;margin:0 auto;padding:28px max(16px,env(safe-area-inset-left)) 64px max(16px,env(safe-area-inset-right))}
-a{color:var(--accent)}
-code{font-family:var(--mono);font-size:.92em}
-header{display:flex;flex-direction:column;gap:6px;margin-bottom:22px}
-.eyebrow{font:500 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-h1{font:600 34px/1.1 var(--display);margin:0;text-wrap:balance}
-.lede{max-width:68ch;color:var(--muted);margin:4px 0 0;font-size:16px}
-.links{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;margin-top:6px}
-h2{font:600 21px/1.25 var(--display);margin:0 0 12px;text-wrap:balance}
-section{margin-top:40px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
-label{font-weight:600;font-size:14px;display:block;margin-bottom:6px}
-textarea{width:100%;min-height:76px;resize:vertical;font:15px/1.5 var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
-textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
-button{font:500 14px var(--body);cursor:pointer;border-radius:8px}
-.go{background:var(--accent);color:var(--accent-fg);border:0;padding:9px 18px}
+.wrap{width:var(--wrap);margin:0 auto;padding-bottom:24px}
+.wrap>header{display:flex;flex-direction:column;gap:0;margin-bottom:32px}
+.eyebrow{font:400 13px/1.4 var(--mono);letter-spacing:.02em;color:var(--ink-2);margin-top:56px}
+.eyebrow+h1{margin-top:12px}
+.lede{max-width:42em;color:var(--ink-2);font-size:18px;margin:0}
+.links{display:flex;gap:18px;flex-wrap:wrap;font-size:15px;margin-top:16px}
+section{margin-top:24px}
+h2{margin:64px 0 24px}
+.panel{padding:22px 24px}
+label{font-weight:500;font-size:15px;display:block;margin-bottom:8px}
+textarea{width:100%;min-height:84px;resize:vertical;font:16px/1.5 var(--sans);padding:12px 14px;border-radius:12px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.go{background:var(--green);border-color:var(--green);color:#fff;min-height:44px;padding:0 22px}
+.go:hover{background:var(--green-deep);border-color:var(--green-deep)}
 .go:disabled{opacity:.55;cursor:progress}
-.go:focus-visible,.ex:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
-.loadmsg{font-size:13px;color:var(--muted)}
-.examples{margin-top:14px}
-.examples .lab{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.exlist{display:flex;flex-wrap:wrap;gap:6px}
-.ex{background:var(--bg);color:var(--fg);border:1px solid var(--line);padding:5px 10px;font-size:13px;text-align:left}
-.ex:hover{border-color:var(--accent)}
-.ex small{color:var(--muted);margin-left:4px}
-.out{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px;margin-top:14px}
+.loadmsg{font-size:14px;color:var(--ink-2)}
+.examples{margin-top:18px}
+.examples .lab{font:400 12.5px/1.4 var(--mono);letter-spacing:.02em;color:var(--ink-2);margin-bottom:8px}
+.exlist{display:flex;flex-wrap:wrap;gap:8px}
+.ex{min-height:36px;padding:0 14px;font-size:14px;font-weight:400;text-align:left}
+.ex small{color:var(--ink-2);margin-left:6px}
+.out{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;margin-top:16px}
 @media (max-width:760px){.out{grid-template-columns:1fr}}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
-.card h3{font:600 13px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.card{min-width:0;margin:0}
+.card h3{font:400 12.5px/1.4 var(--mono);letter-spacing:.02em;color:var(--ink-2);margin:0 0 12px}
 .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.cust{font:600 18px var(--display)}
-.pill{font:600 12px var(--mono);padding:3px 10px;border-radius:999px;border:1px solid currentColor;text-transform:uppercase;letter-spacing:.03em}
-.s-ready{color:var(--ok)} .s-needs_approval{color:var(--route)} .s-blocked{color:var(--block)} .s-needs_info{color:var(--ask)}
-.lines{width:100%;border-collapse:collapse;font-size:14px}
-.lines td{padding:8px 0;border-bottom:1px solid var(--line);vertical-align:top}
-.lines td.amt{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;padding-left:12px}
-.src{display:block;font:12px var(--mono);color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
-.totals{display:flex;gap:18px;flex-wrap:wrap;margin:12px 0 4px}
+.cust{font:400 22px/1.2 var(--serif)}
+.card .pill{display:inline-flex;align-items:center;border-radius:999px;min-height:26px;padding:0 12px;font:500 12px/1 var(--mono);letter-spacing:.03em;border:1px solid var(--ink);color:var(--ink)}
+.pill.s-ready{background:var(--green-wash);border-color:var(--green-wash);color:var(--green)}
+.pill.s-needs_approval{border-style:dashed}
+.pill.s-blocked{background:var(--ink);color:var(--paper)}
+.lines{width:100%;font-size:14px}
+.lines td{padding:9px 0;border-bottom:1px solid var(--rule)}
+.lines td.amt{text-align:right;white-space:nowrap;padding-left:12px}
+.src{display:block;font:12px var(--mono);color:var(--ink-2);margin-top:2px;overflow-wrap:anywhere}
+.totals{display:flex;gap:20px;flex-wrap:wrap;margin:14px 0 4px}
 .totals div{min-width:120px}
-.totals b{display:block;font:600 20px var(--display);font-variant-numeric:tabular-nums}
-.totals span{font-size:12px;color:var(--muted)}
-.nototal{font-size:14px;color:var(--muted);margin:10px 0}
+.totals b{display:block;font:400 26px/1.2 var(--serif);font-variant-numeric:tabular-nums}
+.totals span{font-size:13px;color:var(--ink-2)}
+.nototal{font-size:14px;color:var(--ink-2);margin:10px 0}
 .flags{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
-.flags li{font-size:14px;display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:baseline}
-.sev{font:500 11px var(--mono);padding:1px 7px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
-.sev-info{color:var(--info)} .sev-check,.sev-route{color:var(--route)} .sev-block{color:var(--block)} .sev-ask{color:var(--ask)}
-.code{font:12.5px/1.5 var(--mono);color:var(--muted)}
-.code b{color:var(--fg);font-weight:500}
+.flags li{font-size:14px;display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:baseline;margin:0}
+.sev{display:inline-block;font:500 11px/1.6 var(--mono);padding:0 8px;border-radius:999px;border:1px solid var(--ink);white-space:nowrap}
+.sev-info{border-color:var(--rule);color:var(--ink-2)}
+.sev-check{border-style:dashed}
+.sev-block{background:var(--ink);color:var(--paper)}
+.sev-ask{background:var(--green-wash);border-color:var(--green-wash);color:var(--green)}
+.code{font:12.5px/1.5 var(--mono);color:var(--ink-2)}
+.code b{color:var(--ink);font-weight:500}
 .credits{font-size:14px;margin-top:10px}
 .appr{margin-top:12px;font-size:14px;display:flex;gap:16px;flex-wrap:wrap}
-.appr b{font-weight:600}
-.spec{font:12.5px/1.6 var(--mono);margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
-.spec .k{color:var(--muted)}
-.spec .nul{color:var(--muted);opacity:.7}
-.note{font-size:13px;color:var(--muted);margin-top:10px}
-.placeholder{color:var(--muted);font-size:14px}
-.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-@media (max-width:760px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:440px){.steps{grid-template-columns:1fr}}
-.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;min-width:0}
-.step .n{font:500 12px var(--mono);color:var(--accent)}
-.step h3{font:600 15px var(--body);margin:4px 0 6px}
-.step p{margin:0;font-size:14px;color:var(--muted)}
-.rule{max-width:72ch;margin-top:14px}
+.spec{font:12.5px/1.6 var(--mono);margin:0;white-space:pre-wrap;overflow-wrap:anywhere;background:none;padding:0}
+.spec .k{color:var(--ink-2)}
+.spec .nul{color:var(--ink-2);opacity:.7}
+.note{font-size:14px;color:var(--ink-2);margin-top:10px}
+.placeholder{color:var(--ink-2);font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:860px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.steps{grid-template-columns:1fr}}
+.step{border:1px solid var(--rule);border-radius:16px;padding:18px 20px;min-width:0}
+.step .n{font:400 12.5px/1.4 var(--mono);color:var(--green)}
+.step h3{font:400 20px/1.25 var(--serif);margin:8px 0 8px}
+.step p{margin:0;font-size:14px;color:var(--ink-2)}
+.rule{max-width:46em;margin-top:18px;color:var(--ink-2)}
 .tbl{overflow-x:auto}
-table.res{border-collapse:collapse;width:100%;font-size:14px}
-.res th,.res td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-.res th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.res td.n{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
-ul.lim{margin:0;padding-left:20px;max-width:75ch} ul.lim li{margin-bottom:6px}
-footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.res td.n{white-space:nowrap;font-weight:500}
+ul.lim{margin:0;padding-left:20px;max-width:46em} ul.lim li{margin-bottom:8px}
+.wrap>footer{margin-top:56px;font-size:14px;color:var(--ink-2)}
 </style>
 </head>
 <body>
+<!-- demo-chrome --><header class="demo-top"><a class="demo-brand" href="https://pranavgudise.dev/"><svg class="demo-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.25"/><g class="n"><path class="f" d="M15.5 8.5 L 13.4 13.4 L 8.5 15.5 L 10.6 10.6 Z"/></g><circle class="p" cx="12" cy="12" r=".7"/></svg><span>Pranav Gudise</span></a><a class="pill" href="https://github.com/pg2342-hub/prompt-to-quote">Code on GitHub</a></header><!-- /demo-chrome -->
+
 <div class="wrap">
 <header>
   <div class="eyebrow">Demo · PagerDuty public price book, November 3, 2026</div>
@@ -277,5 +259,6 @@ $("#go").addEventListener("click", run);
 $("#prompt").addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) run(); });
 boot();
 </script>
+<!-- demo-chrome --><footer class="demo-foot"><span>A working build by <a href="https://pranavgudise.dev/">Pranav Gudise</a>. Synthetic or public data only.</span><a href="https://github.com/pg2342-hub/prompt-to-quote">github.com/pg2342-hub/prompt-to-quote</a></footer><!-- /demo-chrome -->
 </body>
 </html>
