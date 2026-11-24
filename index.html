@@ -8,129 +8,225 @@
 <title>Prompt to Quote</title>
 <meta name="description" content="Type a deal in plain English and get a priced quote from PagerDuty's public price book, with the approvals it needs.">
 <style>
-.wrap{width:var(--wrap);margin:0 auto;padding-bottom:24px}
-.wrap>header{display:flex;flex-direction:column;gap:0;margin-bottom:32px}
-.eyebrow{font:400 13px/1.4 var(--mono);letter-spacing:.02em;color:var(--ink-2);margin-top:56px}
-.eyebrow+h1{margin-top:12px}
-.lede{max-width:42em;color:var(--ink-2);font-size:18px;margin:0}
-.links{display:flex;gap:18px;flex-wrap:wrap;font-size:15px;margin-top:16px}
-section{margin-top:24px}
-h2{margin:64px 0 24px}
-.panel{padding:22px 24px}
-label{font-weight:500;font-size:15px;display:block;margin-bottom:8px}
-textarea{width:100%;min-height:84px;resize:vertical;font:16px/1.5 var(--sans);padding:12px 14px;border-radius:12px}
-.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
-.go{background:var(--green);border-color:var(--green);color:#fff;min-height:44px;padding:0 22px}
+.head h1{margin:24px 0 12px}
+.head .lead{max-width:56em;margin:0}
+/* the workspace: the deal on the left, the quote on the right */
+.desk{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"in doc" "rec doc";grid-template-rows:auto 1fr;gap:20px 24px;align-items:start;margin-top:28px;scroll-margin-top:16px}
+.compose{grid-area:in;border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;padding:20px 22px}
+.compose label{display:block;font:500 15px/1.3 var(--sans);margin:0 0 10px}
+.compose textarea{display:block;width:100%;min-height:112px;resize:vertical;padding:12px 14px;border-radius:12px;font:16px/1.5 var(--sans);background:#fff}
+.act{display:flex;align-items:center;gap:12px 16px;flex-wrap:wrap;margin-top:12px}
+.go{background:var(--green);border-color:var(--green);color:#fff;min-height:46px;padding:0 26px;font-size:16px}
 .go:hover{background:var(--green-deep);border-color:var(--green-deep)}
-.go:disabled{opacity:.55;cursor:progress}
-.loadmsg{font-size:14px;color:var(--ink-2)}
-.examples{margin-top:18px}
-.examples .lab{font:400 12.5px/1.4 var(--mono);letter-spacing:.02em;color:var(--ink-2);margin-bottom:8px}
-.exlist{display:flex;flex-wrap:wrap;gap:8px}
-.ex{min-height:36px;padding:0 14px;font-size:14px;font-weight:400;text-align:left}
-.ex small{color:var(--ink-2);margin-left:6px}
-.out{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;margin-top:16px}
-@media (max-width:760px){.out{grid-template-columns:1fr}}
-.card{min-width:0;margin:0}
-.card h3{font:400 12.5px/1.4 var(--mono);letter-spacing:.02em;color:var(--ink-2);margin:0 0 12px}
-.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.cust{font:400 22px/1.2 var(--serif)}
-.card .pill{display:inline-flex;align-items:center;border-radius:999px;min-height:26px;padding:0 12px;font:500 12px/1 var(--mono);letter-spacing:.03em;border:1px solid var(--ink);color:var(--ink)}
-.pill.s-ready{background:var(--green-wash);border-color:var(--green-wash);color:var(--green)}
-.pill.s-needs_approval{border-style:dashed}
-.pill.s-blocked{background:var(--ink);color:var(--paper)}
-.lines{width:100%;font-size:14px}
-.lines td{padding:9px 0;border-bottom:1px solid var(--rule)}
-.lines td.amt{text-align:right;white-space:nowrap;padding-left:12px}
-.src{display:block;font:12px var(--mono);color:var(--ink-2);margin-top:2px;overflow-wrap:anywhere}
-.totals{display:flex;gap:20px;flex-wrap:wrap;margin:14px 0 4px}
-.totals div{min-width:120px}
-.totals b{display:block;font:400 26px/1.2 var(--serif);font-variant-numeric:tabular-nums}
-.totals span{font-size:13px;color:var(--ink-2)}
-.nototal{font-size:14px;color:var(--ink-2);margin:10px 0}
-.flags{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
-.flags li{font-size:14px;display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:baseline;margin:0}
-.sev{display:inline-block;font:500 11px/1.6 var(--mono);padding:0 8px;border-radius:999px;border:1px solid var(--ink);white-space:nowrap}
+.go:disabled{opacity:.6;cursor:progress}
+.kbd{font-size:13px;color:var(--ink-2)}
+.loadmsg{display:flex;align-items:flex-start;line-height:1.5;gap:8px;margin-top:12px;font-size:13.5px;color:var(--ink-2);min-height:20px}
+.loadmsg i{flex:none;width:8px;height:8px;margin-top:6px;border-radius:50%;background:var(--ink-2);opacity:.45}
+.loadmsg.busy i{animation:pulse 1.2s var(--ease) infinite}
+.loadmsg.ok i{background:var(--green);opacity:1}
+.loadmsg.err i{background:var(--ink);opacity:1;border-radius:2px}
+@keyframes pulse{50%{opacity:.1}}
+.exlab{font:500 13px/1.3 var(--sans);margin:20px 0 8px;color:var(--ink)}
+.exlist{display:flex;flex-wrap:wrap;gap:6px}
+.ex{min-height:36px;padding:0 12px;font:400 13.5px/1.2 var(--sans);gap:6px;background:#fff}
+.ex small{font-size:12.5px;color:var(--ink-2)}
+.ex[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.ex[aria-pressed=true] small{color:rgb(244 242 236/.72)}
+.rec{grid-area:rec;border:1px solid var(--rule);border-radius:16px;padding:18px 22px}
+.rec h2,.doc h2,.doc h3{all:unset;display:block}
+.rec h2{font:500 15px/1.3 var(--sans)}
+.rec p{margin:4px 0 12px;font-size:13.5px;color:var(--ink-2)}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 16px;margin:0;font:12.5px/1.55 var(--mono)}
+.kv dt{color:var(--ink-2)}
+.kv dd{margin:0;overflow-wrap:anywhere}
+.kv .nul{color:var(--ink-2);opacity:.65}
+.kv .miss{background:var(--green-wash);color:var(--green);border-radius:4px;padding:0 4px}
+/* the quote document */
+.doc{grid-area:doc;border:1px solid var(--rule);border-radius:16px;background:#fff;box-shadow:0 1px 0 rgb(27 26 23/.04),0 24px 48px -32px rgb(27 26 23/.35);min-width:0;overflow:hidden}
+.dpad{padding:8px 30px 26px}
+.dhead>div{min-width:0}
+.dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 20px;padding:24px 30px 18px;border-bottom:1px solid var(--rule)}
+.doc h2{font:400 28px/1.15 var(--serif);letter-spacing:-.005em}
+.dsub{font:12.5px/1.5 var(--mono);color:var(--ink-2);margin-top:6px}
+.status{display:inline-flex;align-items:center;min-height:30px;padding:0 14px;border-radius:999px;font:500 12.5px/1 var(--mono);letter-spacing:.04em;border:1px solid var(--ink);white-space:nowrap}
+.s-ready{background:var(--green-wash);border-color:var(--green-wash);color:var(--green)}
+.s-needs_approval{border-style:dashed}
+.s-blocked{background:var(--ink);color:var(--paper)}
+.s-needs_info{border-width:1.5px}
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 20px;margin:0;padding:16px 30px;border-bottom:1px solid var(--rule);background:#fbfaf6}
+.meta div{min-width:0}
+.meta dt{font-size:12.5px;color:var(--ink-2)}
+.meta dd{margin:2px 0 0;font-size:14.5px;overflow-wrap:anywhere}
+.meta dd.none{color:var(--ink-2)}
+.stop{margin:20px 30px 0;border:1.5px solid var(--ink);border-radius:12px;padding:14px 16px}
+.stop.ask{border-color:var(--green);background:var(--green-wash)}
+.stop h3{font:500 15px/1.35 var(--sans)}
+.stop ul{list-style:none;margin:8px 0 0;padding:0;font-size:14px}
+.stop li{margin:6px 0 0}
+.stop q{font-weight:500;quotes:"\201C" "\201D"}
+.lines{margin:6px 0 0;font-size:14.5px}
+.lines th{padding-top:18px}
+.lines th.r,.lines td.r{text-align:right;white-space:nowrap;padding-left:16px}
+.lines td{padding:12px 0}
+.lines tbody tr:hover td{background:none}
+.src{display:block;font:12px/1.45 var(--mono);color:var(--ink-2);margin-top:3px;overflow-wrap:anywhere}
+.src .qp{display:none}
+.tot{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 0;width:min(100%,360px);margin:14px 0 0 auto;font-variant-numeric:tabular-nums;font-size:14.5px}
+.tot dt{color:var(--ink-2)}
+.tot dd{margin:0;padding-left:24px;text-align:right;white-space:nowrap}
+.tot hr{grid-column:1/-1;border:0;border-top:1px solid var(--ink);margin:6px 0 6px}
+.tot dt.big{color:var(--ink);font-weight:500;align-self:end}
+.tot dd.big{font:400 30px/1 var(--serif)}
+.nototal{margin:16px 0 0;padding:14px 16px;border:1px dashed var(--rule);border-radius:12px;font-size:14px;color:var(--ink-2)}
+.nototal b{color:var(--ink)}
+.part{margin-top:22px}
+.part h3{font:500 14.5px/1.35 var(--sans);padding-bottom:8px;border-bottom:1px solid var(--ink)}
+.part ul{list-style:none;margin:0;padding:0}
+.part li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:10px 0;border-bottom:1px solid var(--rule);margin:0;font-size:14px}
+.part li.n{grid-template-columns:auto minmax(0,1fr)}
+.code{font:11.5px/1.4 var(--mono);color:var(--ink-2);margin-left:4px;overflow-wrap:anywhere}
+.who{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;align-self:start}
+.role{display:inline-block;font:500 12px/1 var(--sans);padding:5px 9px;border-radius:999px;background:var(--ink);color:var(--paper);white-space:nowrap}
+.sev{display:inline-block;align-self:start;font:500 11px/1.6 var(--mono);padding:0 8px;border-radius:999px;border:1px solid var(--ink);white-space:nowrap}
 .sev-info{border-color:var(--rule);color:var(--ink-2)}
 .sev-check{border-style:dashed}
 .sev-block{background:var(--ink);color:var(--paper)}
 .sev-ask{background:var(--green-wash);border-color:var(--green-wash);color:var(--green)}
-.code{font:12.5px/1.5 var(--mono);color:var(--ink-2)}
-.code b{color:var(--ink);font-weight:500}
-.credits{font-size:14px;margin-top:10px}
-.appr{margin-top:12px;font-size:14px;display:flex;gap:16px;flex-wrap:wrap}
-.spec{font:12.5px/1.6 var(--mono);margin:0;white-space:pre-wrap;overflow-wrap:anywhere;background:none;padding:0}
-.spec .k{color:var(--ink-2)}
-.spec .nul{color:var(--ink-2);opacity:.7}
-.note{font-size:14px;color:var(--ink-2);margin-top:10px}
-.placeholder{color:var(--ink-2);font-size:14px}
-.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-@media (max-width:860px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:480px){.steps{grid-template-columns:1fr}}
-.step{border:1px solid var(--rule);border-radius:16px;padding:18px 20px;min-width:0}
-.step .n{font:400 12.5px/1.4 var(--mono);color:var(--green)}
-.step h3{font:400 20px/1.25 var(--serif);margin:8px 0 8px}
-.step p{margin:0;font-size:14px;color:var(--ink-2)}
-.rule{max-width:46em;margin-top:18px;color:var(--ink-2)}
-.tbl{overflow-x:auto}
-.res td.n{white-space:nowrap;font-weight:500}
-ul.lim{margin:0;padding-left:20px;max-width:46em} ul.lim li{margin-bottom:8px}
-.wrap>footer{margin-top:56px;font-size:14px;color:var(--ink-2)}
+.sev-route{border-color:var(--ink)}
+.route{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 20px;padding:18px 30px;border-top:1px solid var(--rule);background:#fbfaf6;font-size:14.5px}
+.route dt{color:var(--ink-2)}
+.route dd{margin:0}
+.route dd b{font-weight:500}
+.prov{display:flex;gap:8px;align-items:baseline;padding:12px 30px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-2);margin:0}
+.prov i{flex:none;width:7px;height:7px;border-radius:50%;background:var(--ink-2);opacity:.5;transform:translateY(-1px)}
+.prov.live i{background:var(--green);opacity:1}
+.empty{padding:48px 30px;text-align:center;color:var(--ink-2);font-size:14.5px}
+.empty b{display:block;font:400 22px/1.3 var(--serif);color:var(--ink);margin-bottom:6px}
+.doc.stale{opacity:.55;transition:opacity .2s}
+/* explanation below the tool */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:56px;align-items:start;margin-top:16px}
+.side{position:sticky;top:24px;margin-top:64px;display:grid;gap:22px;font-size:14px;color:var(--ink-2)}
+.side h3{margin:0 0 6px;font:500 13px/1.3 var(--sans);color:var(--ink)}
+.side p{margin:0}
+.side nav a{display:block;padding:5px 0;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule-soft)}
+.side nav a:hover{color:var(--ink)}
+.side pre{font-size:12px;margin:6px 0 0}
+.content section{scroll-margin-top:16px}
+.point{font-size:17px;max-width:42em;margin:0 0 20px}
+.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.step{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;padding:18px 20px;min-width:0}
+.step h3{margin:0 0 6px;font:400 21px/1.25 var(--serif);display:flex;gap:10px;align-items:baseline}
+.step h3 span{font:400 15px/1 var(--serif);color:var(--green);min-width:12px}
+.step p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.step p b{color:var(--ink)}
+.sevs{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:8px;font-size:15px}
+.sevs li{display:grid;grid-template-columns:4.5em minmax(0,1fr);gap:12px;align-items:baseline;margin:0}
+.sevs .sev{justify-self:start}
+.note{color:var(--ink-2);font-size:15px;max-width:44em;margin-top:16px}
+.res{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;overflow:hidden}
+.rrow{display:grid;grid-template-columns:minmax(0,15em) 8em minmax(0,1fr);gap:20px;align-items:baseline;padding:18px 22px}
+.rrow+.rrow{border-top:1px solid var(--rule-soft)}
+.rrow .what{font-weight:500;font-size:15px}
+.rrow .what{line-height:1.4}
+.rrow .score{font:400 15px/1 var(--sans);color:var(--ink-2);white-space:nowrap}
+.rrow .score b{font:400 30px/1 var(--serif);color:var(--ink);font-variant-numeric:tabular-nums}
+.rrow p{margin:0;font-size:14.5px;color:var(--ink-2)}
+ul.lim{margin:0;padding-left:20px;max-width:46em}
+ul.lim li{margin-bottom:10px}
+@media (max-width:1000px){
+ .layout{grid-template-columns:minmax(0,1fr);gap:0}
+ .side{position:static;margin-top:48px}
+}
+@media (max-width:860px){
+ .desk{grid-template-columns:minmax(0,1fr);grid-template-areas:"in" "doc" "rec"}
+}
+@media (max-width:640px){
+ .compose{padding:16px}
+ .dhead{padding:20px 18px 14px}
+ .doc h2{font-size:24px}
+ .meta{grid-template-columns:repeat(2,minmax(0,1fr));padding:14px 18px}
+ .dpad{padding:18px}
+ .stop{margin:16px 18px 0}
+ .lines .qc{display:none}
+ .src .qp{display:inline}
+ .tot{width:100%}
+ .part li{grid-template-columns:minmax(0,1fr)}
+ .who{justify-content:flex-start}
+ .route{grid-template-columns:minmax(0,1fr);padding:16px 18px;gap:2px 0}
+ .route dd+dt{margin-top:8px}
+ .prov{padding:12px 18px}
+ .steps{grid-template-columns:minmax(0,1fr)}
+ .rrow{grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;padding:16px 18px}
+ .rrow p{grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){.loadmsg.busy i{animation:none}}
 </style>
 </head>
 <body>
 <!-- demo-chrome --><header class="demo-top"><a class="demo-brand" href="https://pranavgudise.dev/"><svg class="demo-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.25"/><g class="n"><path class="f" d="M15.5 8.5 L 13.4 13.4 L 8.5 15.5 L 10.6 10.6 Z"/></g><circle class="p" cx="12" cy="12" r=".7"/></svg><span>Pranav Gudise</span></a><a class="pill" href="https://github.com/pg2342-hub/prompt-to-quote">Code on GitHub</a></header><!-- /demo-chrome -->
 
-<div class="wrap">
-<header>
-  <div class="eyebrow">Demo · PagerDuty public price book, November 3, 2026</div>
+<main>
+<div class="head">
   <h1>Prompt to Quote</h1>
-  <p class="lede">Describe a deal the way a rep would. The interpreter turns your words into a deal record, and a separate pricing engine prices that record from PagerDuty's public price book, checks it against an example approval policy, and routes it. The interpreter never sees a price. Anything the book can't price, or any term it can't read, goes to deal desk or back to the rep instead of being guessed.</p>
-  <div class="links"><a href="https://github.com/pg2342-hub/prompt-to-quote">Source on GitHub</a><a href="#how">How it works</a><a href="#results">Test results</a><a href="#limits">Limits</a></div>
-</header>
-
-<div class="panel">
-  <label for="prompt">Deal description</label>
-  <textarea id="prompt" spellcheck="false">Essential for Kite Data, 20 users, about 40,000 events a year, annual.</textarea>
-  <div class="row">
-    <button class="go" id="go" type="button" disabled>Quote it</button>
-    <span class="loadmsg" id="loadmsg" role="status">Loading Python in your browser (about 10 seconds the first time)…</span>
-  </div>
-  <div class="examples">
-    <div class="lab">Try one</div>
-    <div class="exlist" id="exlist"></div>
-  </div>
+  <p class="lead">Describe a deal the way a rep would. You get a quote priced from PagerDuty's public price book (November 3, 2026), checked against an example approval policy, and routed to the people who need to approve it.</p>
 </div>
 
-<div class="out" id="out" aria-live="polite">
-  <div class="card" id="quotecard"><h3>Quote</h3><p class="placeholder">The quote appears here.</p></div>
-  <div class="card" id="speccard"><h3>Deal record the interpreter extracted</h3><p class="placeholder">This is all the pricing engine sees.</p></div>
-</div>
+<section class="desk" id="tool" aria-label="Quote a deal">
+  <div class="compose">
+    <label for="prompt">Describe the deal</label>
+    <textarea id="prompt" spellcheck="false">Essential for Kite Data, 20 users, about 40,000 events a year, annual.</textarea>
+    <div class="act">
+      <button class="go" id="go" type="button">Quote it</button>
+      <span class="kbd">or Ctrl / ⌘ + Enter</span>
+    </div>
+    <div class="loadmsg busy" id="loadmsg" role="status"><i aria-hidden="true"></i><span>Loading Python in your browser (about 10 seconds the first time). The examples work now.</span></div>
+    <div class="exlab" id="exlab">Examples</div>
+    <div class="exlist" id="exlist" role="group" aria-labelledby="exlab"></div>
+  </div>
+
+  <article class="doc" id="quotecard" aria-live="polite">
+    <div class="empty"><b>No quote yet</b>Pick an example or describe a deal, then press Quote it.</div>
+  </article>
+
+  <div class="rec" id="speccard">
+    <h2>Deal record the interpreter extracted</h2>
+    <p>This is all the pricing engine sees. There are no prices in it.</p>
+    <dl class="kv" id="kv"></dl>
+  </div>
+</section>
+
+<div class="layout">
+<div class="content">
 
 <section id="how">
   <h2>How it works</h2>
+  <p class="point">The interpreter turns your words into a deal record, and a separate pricing engine prices that record from PagerDuty's public price book, checks it against an example approval policy, and routes it. The interpreter never sees a price. Anything the book can't price, or any term it can't read, goes to deal desk or back to the rep instead of being guessed.</p>
   <div class="steps">
-    <div class="step"><span class="n">1 · interpret</span><h3>Words to fields</h3><p>Plan, users, stakeholders, billing, term, discount, payment terms, price lock, close date, events, AI Actions, add-ons. A term it can't read goes on an unparsed list.</p></div>
-    <div class="step"><span class="n">2 · price</span><h3>Fields to dollars</h3><p>Prices come only from <code>data/price_book.json</code>, and every line cites the entry it came from. A new price book changes prices without a code change.</p></div>
-    <div class="step"><span class="n">3 · check</span><h3>Book and policy rules</h3><p>Starter's 30-seat cap, stakeholders counting as seats, annual-upfront billing, bonus seats, the AI Actions promotion deadline, discount bands, payment terms, price locks.</p></div>
-    <div class="step"><span class="n">4 · route</span><h3>Status and approvers</h3><p>Ready, needs approval, blocked, or needs info. A quote could approve on its own only at 10% off or less with nothing but informational flags.</p></div>
+    <div class="step"><h3><span>1</span>Interpret</h3><p><b>Words to fields.</b> Plan, users, stakeholders, billing, term, discount, payment terms, price lock, close date, events, AI Actions, add-ons. A term it can't read goes on an unparsed list.</p></div>
+    <div class="step"><h3><span>2</span>Price</h3><p><b>Fields to dollars.</b> Prices come only from <code>data/price_book.json</code>, and every line cites the entry it came from. A new price book changes prices without a code change.</p></div>
+    <div class="step"><h3><span>3</span>Check</h3><p><b>Book and policy rules.</b> Starter's 30-seat cap, stakeholders counting as seats, annual-upfront billing, bonus seats, the AI Actions promotion deadline, discount bands, payment terms, price locks.</p></div>
+    <div class="step"><h3><span>4</span>Route</h3><p><b>Status and approvers.</b> Ready, needs approval, blocked, or needs info. A quote could approve on its own only at 10% off or less with nothing but informational flags.</p></div>
   </div>
-  <p class="rule">Flags carry a severity: <span class="sev sev-info">info</span> <span class="sev sev-check">check</span> a person confirms, <span class="sev sev-route">route</span> adds an approver, <span class="sev sev-block">block</span> can't be quoted as asked, <span class="sev sev-ask">ask</span> the rep needs to supply or restate something. Blocked and needs-info quotes show no total, so nobody can forward a number that isn't real. This page runs the offline rules interpreter; the repo also has a Claude interpreter that fills the same record through a strict tool call.</p>
+  <ul class="sevs" id="flags" aria-label="Flag severities">
+    <li><span class="sev sev-info">info</span><span>For the record. Nothing to do.</span></li>
+    <li><span class="sev sev-check">check</span><span>A person confirms.</span></li>
+    <li><span class="sev sev-route">route</span><span>Adds an approver.</span></li>
+    <li><span class="sev sev-block">block</span><span>Can't be quoted as asked.</span></li>
+    <li><span class="sev sev-ask">ask</span><span>The rep needs to supply or restate something.</span></li>
+  </ul>
+  <p class="note">Blocked and needs-info quotes show no total, so nobody can forward a number that isn't real. This page runs the offline rules interpreter; the repo also has a Claude interpreter that fills the same record through a strict tool call.</p>
 </section>
 
 <section id="results">
   <h2>Test results</h2>
-  <div class="tbl"><table class="res">
-    <thead><tr><th>Check</th><th>Result</th><th>What it shows</th></tr></thead>
-    <tbody>
-      <tr><td>30 hand-checked deals, rules interpreter + engine</td><td class="n">30 of 30</td><td>Zero critical errors. 10 of the deals are price-book traps. The go-live gate is 29 of 30 with no critical errors.</td></tr>
-      <tr><td>Engine alone, on hand-written deal records</td><td class="n">30 of 30</td><td>The pricing and routing are right independent of the interpreter.</td></tr>
-      <tr><td>List price times quantity</td><td class="n">3 of 30</td><td>A floor, not a competitor. It shows the cases test more than multiplication.</td></tr>
-      <tr><td>Price-book change, before vs. at launch</td><td class="n">7 of 30 move</td><td>A 20-user Essential deal at 40,000 events fit before November 3 and needs credits for 15,000 events after.</td></tr>
-      <tr><td>15 fresh deals written by an outside reviewer</td><td class="n">0 wrong</td><td>5 priced correctly and 10 asked the rep. Too many asks for a product, but the right direction to err.</td></tr>
-      <tr><td>25 tricky phrasings found in review</td><td class="n">25 of 25</td><td>A regression check. The parser was fixed against these, so it isn't a held-out score.</td></tr>
-    </tbody>
-  </table></div>
+  <div class="res">
+    <div class="rrow"><div class="what">30 hand-checked deals, rules interpreter + engine</div><div class="score"><b>30</b> of 30</div><p>Zero critical errors. 10 of the deals are price-book traps. The go-live gate is 29 of 30 with no critical errors.</p></div>
+    <div class="rrow"><div class="what">Engine alone, on hand-written deal records</div><div class="score"><b>30</b> of 30</div><p>The pricing and routing are right independent of the interpreter.</p></div>
+    <div class="rrow"><div class="what">List price times quantity</div><div class="score"><b>3</b> of 30</div><p>A floor, not a competitor. It shows the cases test more than multiplication.</p></div>
+    <div class="rrow"><div class="what">Price-book change, before vs. at launch</div><div class="score"><b>7</b> of 30 move</div><p>A 20-user Essential deal at 40,000 events fit before November 3 and needs credits for 15,000 events after.</p></div>
+    <div class="rrow"><div class="what">15 fresh deals written by an outside reviewer</div><div class="score"><b>0</b> wrong</div><p>5 priced correctly and 10 asked the rep. Too many asks for a product, but the right direction to err.</p></div>
+    <div class="rrow"><div class="what">25 tricky phrasings found in review</div><div class="score"><b>25</b> of 25</div><p>A regression check. The parser was fixed against these, so it isn't a held-out score.</p></div>
+  </div>
 </section>
 
 <section id="limits">
@@ -143,23 +239,23 @@ ul.lim{margin:0;padding-left:20px;max-width:46em} ul.lim li{margin-bottom:8px}
     <li>No CRM write-back and no order form.</li>
   </ul>
 </section>
-
-<footer>Prices from pagerduty.com/pricing (amounts as of November 3, 2026). The approval policy and every customer name are invented. Not affiliated with PagerDuty or Roadrunner. Built by Pranav Gudise.</footer>
 </div>
 
+<aside class="side" aria-label="About this build">
+  <nav aria-label="On this page"><a href="#tool">Quote a deal</a><a href="#how">How it works</a><a href="#results">Test results</a><a href="#limits">Limits</a></nav>
+  <div><h3>Data</h3><p>Prices from pagerduty.com/pricing (amounts as of November 3, 2026). The approval policy and every customer name are invented. Not affiliated with PagerDuty or Roadrunner.</p></div>
+  <div><h3>Run it yourself</h3><p>Python 3.9+, standard library only. This page runs the same code in your browser with Pyodide; nothing is sent anywhere.</p><pre>python3 quote.py "Essential for Kite Data, 20 users, about 40,000 events a year, annual."
+python3 run_eval.py</pre></div>
+  <div><a class="pill" href="https://github.com/pg2342-hub/prompt-to-quote">Code on GitHub</a></div>
+</aside>
+</div>
+</main>
+
+<!-- examples --><script id="examples" type="application/json">[{"prompt":"Essential for Kite Data, 20 users, about 40,000 events a year, annual.","name":"Kite Data","tag":"credits needed","spec":{"customer":"Kite Data","product":"platform_essential","legacy_plan":null,"users":20,"stakeholders":0,"billing":"annual","term_years":1,"discount_pct":0.0,"payment_terms_days":30,"price_lock":false,"close_date":null,"events_year":40000,"ai_actions_year":null,"addons":[],"unparsed":[]},"quote":{"status":"needs_approval","product":"platform_essential","lines":[{"sku":"platform_essential","description":"PD Reliability Platform Essential platform fee (annual, upfront)","qty":1,"unit":"year","unit_price":12000,"amount_year":12000,"source":"price_book 2026-11-03: platform_essential.platform_fee_year"}],"discount_pct":0.0,"year1_total":12000.0,"contract_total":12000.0,"credits":[{"reason":"15,000 events a year above the 25,000 included","credits":null}],"approvers":["deal_desk"],"flags":[{"code":"CREDITS_NEEDED","severity":"route","message":"Extra usage is bought with credits, and PagerDuty does not publish a price per credit; deal desk sets the rate.","approvers":["deal_desk"]}],"auto_approve_eligible":false}},{"prompt":"Plus for Halcyon Bank, 50 users, 18% discount, net 60, close Dec 22","name":"Halcyon Bank","tag":"approvals","spec":{"customer":"Halcyon Bank","product":"platform_plus","legacy_plan":null,"users":50,"stakeholders":0,"billing":"annual","term_years":1,"discount_pct":18.0,"payment_terms_days":60,"price_lock":false,"close_date":"2026-12-22","events_year":null,"ai_actions_year":null,"addons":[],"unparsed":[]},"quote":{"status":"needs_approval","product":"platform_plus","lines":[{"sku":"platform_plus","description":"PD Reliability Platform Plus platform fee (annual, upfront)","qty":1,"unit":"year","unit_price":48000,"amount_year":48000,"source":"price_book 2026-11-03: platform_plus.platform_fee_year"}],"discount_pct":18.0,"year1_total":39360.0,"contract_total":39360.0,"credits":[],"approvers":["sales_manager","deal_desk","finance"],"flags":[{"code":"DISCOUNT","severity":"route","message":"18% discount needs sales_manager, deal_desk.","approvers":["sales_manager","deal_desk"]},{"code":"PAYMENT_TERMS","severity":"route","message":"Net 60 is beyond standard net 30.","approvers":["finance"]}],"auto_approve_eligible":false}},{"prompt":"Starter for Pike & Co, 34 users","name":"Pike & Co","tag":"seat cap","spec":{"customer":"Pike & Co","product":"platform_starter","legacy_plan":null,"users":34,"stakeholders":0,"billing":"annual","term_years":1,"discount_pct":0.0,"payment_terms_days":30,"price_lock":false,"close_date":null,"events_year":null,"ai_actions_year":null,"addons":[],"unparsed":[]},"quote":{"status":"blocked","product":"platform_starter","lines":[{"sku":"platform_starter","description":"PD Reliability Platform Starter platform fee (annual, upfront)","qty":1,"unit":"year","unit_price":2800,"amount_year":2800,"source":"price_book 2026-11-03: platform_starter.platform_fee_year"}],"discount_pct":0.0,"year1_total":null,"contract_total":null,"credits":[],"approvers":[],"flags":[{"code":"SEAT_CAP","severity":"block","message":"PD Reliability Platform Starter has a 30-seat cap; this deal needs 34 seats (stakeholders count as seats). Quote Essential instead.","approvers":[]}],"auto_approve_eligible":false}},{"prompt":"Essential for Quill Software, 15 users, billed monthly.","name":"Quill Software","tag":"annual only","spec":{"customer":"Quill Software","product":"platform_essential","legacy_plan":null,"users":15,"stakeholders":0,"billing":"monthly","term_years":1,"discount_pct":0.0,"payment_terms_days":30,"price_lock":false,"close_date":null,"events_year":null,"ai_actions_year":null,"addons":[],"unparsed":[]},"quote":{"status":"blocked","product":"platform_essential","lines":[{"sku":"platform_essential","description":"PD Reliability Platform Essential platform fee (annual, upfront)","qty":1,"unit":"year","unit_price":12000,"amount_year":12000,"source":"price_book 2026-11-03: platform_essential.platform_fee_year"}],"discount_pct":0.0,"year1_total":null,"contract_total":null,"credits":[],"approvers":[],"flags":[{"code":"PLATFORM_MONTHLY","severity":"block","message":"The Reliability Platform is billed annually, paid upfront; there is no monthly option.","approvers":[]}],"auto_approve_eligible":false}},{"prompt":"Plus for Cobalt Energy, 40 users, 30,000 AI Actions a year, closing Dec 30.","name":"Cobalt Energy","tag":"promotion","spec":{"customer":"Cobalt Energy","product":"platform_plus","legacy_plan":null,"users":40,"stakeholders":0,"billing":"annual","term_years":1,"discount_pct":0.0,"payment_terms_days":30,"price_lock":false,"close_date":"2026-12-30","events_year":null,"ai_actions_year":30000,"addons":[],"unparsed":[]},"quote":{"status":"needs_approval","product":"platform_plus","lines":[{"sku":"platform_plus","description":"PD Reliability Platform Plus platform fee (annual, upfront)","qty":1,"unit":"year","unit_price":48000,"amount_year":48000,"source":"price_book 2026-11-03: platform_plus.platform_fee_year"}],"discount_pct":0.0,"year1_total":48000.0,"contract_total":48000.0,"credits":[],"approvers":["deal_desk"],"flags":[{"code":"PROMO_APPLIED","severity":"route","message":"The promotion adds AI Actions at no credits in year 1 (signed by 2027-01-15), but PagerDuty does not publish how many; deal desk confirms it covers 14,000 more a year.","approvers":["deal_desk"]}],"auto_approve_eligible":false}},{"prompt":"Cask Systems is currently on Business, quote Essential for 20 users","name":"Cask Systems","tag":"older plan","spec":{"customer":"Cask Systems","product":"platform_essential","legacy_plan":"business","users":20,"stakeholders":0,"billing":"annual","term_years":1,"discount_pct":0.0,"payment_terms_days":30,"price_lock":false,"close_date":null,"events_year":null,"ai_actions_year":null,"addons":[],"unparsed":[]},"quote":{"status":"needs_approval","product":"platform_essential","lines":[{"sku":"platform_essential","description":"PD Reliability Platform Essential platform fee (annual, upfront)","qty":1,"unit":"year","unit_price":12000,"amount_year":12000,"source":"price_book 2026-11-03: platform_essential.platform_fee_year"}],"discount_pct":0.0,"year1_total":12000.0,"contract_total":12000.0,"credits":[],"approvers":["deal_desk"],"flags":[{"code":"LEGACY_MIGRATION","severity":"route","message":"Customer is moving from the 'business' plan, which is no longer on the public price list; deal desk confirms how its current entitlements map to the new plan.","approvers":["deal_desk"]}],"auto_approve_eligible":false}},{"prompt":"Essential for Acme, 20 users, first year free","name":"Acme","tag":"asks the rep","spec":{"customer":"Acme","product":"platform_essential","legacy_plan":null,"users":20,"stakeholders":0,"billing":"annual","term_years":1,"discount_pct":0.0,"payment_terms_days":30,"price_lock":false,"close_date":null,"events_year":null,"ai_actions_year":null,"addons":[],"unparsed":["a free period, waived fee, or other price change"]},"quote":{"status":"needs_info","product":"platform_essential","lines":[{"sku":"platform_essential","description":"PD Reliability Platform Essential platform fee (annual, upfront)","qty":1,"unit":"year","unit_price":12000,"amount_year":12000,"source":"price_book 2026-11-03: platform_essential.platform_fee_year"}],"discount_pct":0.0,"year1_total":null,"contract_total":null,"credits":[],"approvers":[],"flags":[{"code":"UNPARSED","severity":"ask","message":"The request mentions a free period, waived fee, or other price change, but it could not be read into the deal; restate it (for example '15% off', '40,000 events a year').","approvers":[]}],"auto_approve_eligible":false}},{"prompt":"Reliability Platform for Pinecrest Apps, 14 users, about 3,000 events a year, annual.","name":"Pinecrest Apps","tag":"picks a tier","spec":{"customer":"Pinecrest Apps","product":"platform","legacy_plan":null,"users":14,"stakeholders":0,"billing":"annual","term_years":1,"discount_pct":0.0,"payment_terms_days":30,"price_lock":false,"close_date":null,"events_year":3000,"ai_actions_year":null,"addons":[],"unparsed":[]},"quote":{"status":"ready","product":"platform_essential","lines":[{"sku":"platform_essential","description":"PD Reliability Platform Essential platform fee (annual, upfront)","qty":1,"unit":"year","unit_price":12000,"amount_year":12000,"source":"price_book 2026-11-03: platform_essential.platform_fee_year"}],"discount_pct":0.0,"year1_total":12000.0,"contract_total":12000.0,"credits":[],"approvers":[],"flags":[{"code":"TIER_RECOMMENDED","severity":"check","message":"Rep did not name a tier; PD Reliability Platform Essential is the smallest tier whose included seats, events, and AI Actions cover this deal.","approvers":[]},{"code":"ALTERNATIVE_TIER","severity":"check","message":"PD Reliability Platform Starter plus 4 extra seats bought with credits at 40 credits each may cost less; compare once deal desk sets the credit rate.","approvers":[]}],"auto_approve_eligible":false}},{"prompt":"Professional for 200 users at Vantage Media, annual, 35% off for a 3 year deal with price locked.","name":"Vantage Media","tag":"big discount","spec":{"customer":"Vantage Media","product":"im_professional","legacy_plan":null,"users":200,"stakeholders":0,"billing":"annual","term_years":3,"discount_pct":35.0,"payment_terms_days":30,"price_lock":true,"close_date":null,"events_year":null,"ai_actions_year":null,"addons":[],"unparsed":[]},"quote":{"status":"needs_approval","product":"im_professional","lines":[{"sku":"im_professional","description":"Incident Management Professional (annual billing)","qty":200,"unit":"user/month","unit_price":21,"amount_year":50400,"source":"price_book 2026-11-03: im_professional.price_per_user_month.annual"}],"discount_pct":35.0,"year1_total":32760.0,"contract_total":98280.0,"credits":[],"approvers":["sales_manager","deal_desk","finance","cro"],"flags":[{"code":"DISCOUNT","severity":"route","message":"35% discount needs sales_manager, deal_desk, finance, cro.","approvers":["sales_manager","deal_desk","finance","cro"]},{"code":"PRICE_LOCK","severity":"route","message":"Multi-year price lock is a non-standard term.","approvers":["deal_desk"]}],"auto_approve_eligible":false}}]</script><!-- /examples -->
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
 <script>
-const EXAMPLES = [
-  ["Essential for Kite Data, 20 users, about 40,000 events a year, annual.", "credits needed"],
-  ["Plus for Halcyon Bank, 50 users, 18% discount, net 60, close Dec 22", "approvals"],
-  ["Starter for Pike & Co, 34 users", "seat cap"],
-  ["Essential for Quill Software, 15 users, billed monthly.", "annual only"],
-  ["Plus for Cobalt Energy, 40 users, 30,000 AI Actions a year, closing Dec 30.", "promotion"],
-  ["Cask Systems is currently on Business, quote Essential for 20 users", "older plan"],
-  ["Essential for Acme, 20 users, first year free", "asks the rep"],
-  ["Reliability Platform for Pinecrest Apps, 14 users, about 3,000 events a year, annual.", "picks a tier"],
-  ["Professional for 200 users at Vantage Media, annual, 35% off for a 3 year deal with price locked.", "big discount"]
-];
+// Precomputed by scripts/build_examples.py with the same interpreter and engine the page runs below.
+const EXAMPLES = JSON.parse(document.getElementById("examples").textContent);
 const FILES = ["quoter/engine.py","quoter/interpret.py","data/price_book.json","data/approval_policy.json"];
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -167,29 +263,162 @@ const money = n => n == null ? "" : "$" + Number(n).toLocaleString("en-US", {min
 const NAMES = {im_free:"Incident Management Free", im_professional:"Incident Management Professional", platform_starter:"Reliability Platform Starter", platform_essential:"Reliability Platform Essential", platform_plus:"Reliability Platform Plus", platform_ultimate:"Reliability Platform Ultimate"};
 const STATUS = {ready:"Ready", needs_approval:"Needs approval", blocked:"Blocked", needs_info:"Needs info"};
 const APPROVER = {sales_manager:"Sales manager", deal_desk:"Deal desk", finance:"Finance", cro:"CRO"};
+const ORDER = ["customer","product","legacy_plan","users","stakeholders","billing","term_years","discount_pct","payment_terms_days","price_lock","close_date","events_year","ai_actions_year","addons","unparsed"];
+const role = a => APPROVER[a] || a;
 
+let py = null, pending = false, failed = false;
+
+// ---- example chips ----
 const exlist = $("#exlist");
-EXAMPLES.forEach(([p, tag]) => {
+EXAMPLES.forEach(ex => {
   const b = document.createElement("button");
-  b.type = "button"; b.className = "ex";
-  b.innerHTML = esc(p.length > 58 ? p.slice(0, 56) + "…" : p) + "<small>" + esc(tag) + "</small>";
-  b.title = p;
-  b.addEventListener("click", () => { $("#prompt").value = p; run(); });
+  b.type = "button"; b.className = "ex"; b.title = ex.prompt;
+  b.setAttribute("aria-pressed", "false");
+  b.innerHTML = esc(ex.name) + "<small>" + esc(ex.tag) + "</small>";
+  b.addEventListener("click", () => { $("#prompt").value = ex.prompt; run(); });
   exlist.appendChild(b);
 });
+function markChip(){
+  const p = $("#prompt").value.trim();
+  exlist.querySelectorAll(".ex").forEach(b => b.setAttribute("aria-pressed", String(b.title === p)));
+}
 
-let py = null;
+// ---- rendering ----
+function renderQuote(spec, q, live){
+  const name = spec.customer || "(customer not named)";
+  const yrs = spec.term_years || 1;
+  let h = `<header class="dhead"><div><h2>Quote for ${esc(name)}</h2><div class="dsub">Price book of November 3, 2026 · example approval policy</div></div><span class="status s-${q.status}">${STATUS[q.status] || q.status}</span></header>`;
+
+  const meta = [
+    ["Plan", q.product ? NAMES[q.product] || q.product : (spec.product ? NAMES[spec.product] || spec.product : null)],
+    ["Users", spec.users == null ? null : spec.users + (spec.stakeholders ? ` + ${spec.stakeholders} stakeholders` : "")],
+    ["Term", spec.term_years ? `${spec.term_years} year${spec.term_years > 1 ? "s" : ""}${spec.price_lock ? ", price locked" : ""}` : null],
+    ["Billing", spec.billing ? spec.billing[0].toUpperCase() + spec.billing.slice(1) : null],
+    ["Payment", spec.payment_terms_days ? "Net " + spec.payment_terms_days : null],
+    ["Close date", spec.close_date],
+  ];
+  h += `<dl class="meta">` + meta.map(([k, v]) => `<div><dt>${k}</dt><dd${v == null ? ' class="none"' : ""}>${v == null ? "Not given" : esc(v)}</dd></div>`).join("") + `</dl>`;
+
+  const blocks = q.flags.filter(f => f.severity === "block");
+  const asks = q.flags.filter(f => f.severity === "ask");
+  if (asks.length){
+    const terms = (spec.unparsed || []).map(t => `<q>${esc(t)}</q>`).join(", ");
+    h += `<div class="stop ask"><h3>${terms ? "Terms it could not read: " + terms : "Back to the rep"}</h3><ul>` +
+      asks.map(f => `<li>${esc(f.message)}<span class="code">${esc(f.code)}</span></li>`).join("") + `</ul></div>`;
+  }
+  if (blocks.length){
+    h += `<div class="stop"><h3>Can't be quoted as asked</h3><ul>` +
+      blocks.map(f => `<li>${esc(f.message)}<span class="code">${esc(f.code)}</span></li>`).join("") + `</ul></div>`;
+  }
+
+  h += `<div class="dpad">`;
+  if (q.lines.length){
+    h += `<table class="lines"><thead><tr><th>Item</th><th class="r qc">Qty</th><th class="r qc">Unit price</th><th class="r">Per year</th></tr></thead><tbody>` +
+      q.lines.map(l => {
+        const per = String(l.unit).split("/").pop();
+        return `<tr><td>${esc(l.description)}<span class="src"><span class="qp">${esc(l.qty)} × ${money(l.unit_price)} per ${esc(per)} · </span>${esc(l.source)}</span></td><td class="r qc">${esc(l.qty)}</td><td class="r qc">${money(l.unit_price)} / ${esc(per)}</td><td class="r">${money(l.amount_year)}</td></tr>`;
+      }).join("") + `</tbody></table>`;
+  }
+  if (q.year1_total != null){
+    const sub = q.lines.reduce((s, l) => s + l.amount_year, 0);
+    h += `<dl class="tot">`;
+    if (q.discount_pct){
+      h += `<dt>Subtotal per year</dt><dd>${money(sub)}</dd><dt>Discount (${q.discount_pct}% off)</dt><dd>−${money(Math.round((sub - q.year1_total) * 100) / 100)}</dd>`;
+    }
+    h += `<hr><dt class="big">Year 1 total</dt><dd class="big">${money(q.year1_total)}</dd><dt>Contract total (${yrs} yr)</dt><dd>${money(q.contract_total)}</dd></dl>`;
+  } else {
+    h += `<p class="nototal"><b>No total shown:</b> ${q.status === "blocked" ? "the deal can't be quoted as asked" : q.status === "needs_info" ? "the rep needs to answer the question above first" : "deal desk sets part of the price"}.</p>`;
+  }
+
+  if (q.credits.length){
+    h += `<div class="part"><h3>Usage bought with credits</h3><ul>` +
+      q.credits.map(c => `<li class="n"><span>${esc(c.reason)}${c.credits != null ? ` (${Number(c.credits).toLocaleString("en-US")} credits)` : ""}</span><span class="who"><span class="role">Rate: ${role("deal_desk")}</span></span></li>`).join("") +
+      `</ul><p class="src" style="margin-top:8px">PagerDuty doesn't publish a credit rate, so deal desk sets it.</p></div>`;
+  }
+
+  const routed = q.flags.filter(f => f.approvers && f.approvers.length && f.severity !== "block" && f.severity !== "ask");
+  h += `<div class="part"><h3>Approvals needed</h3><ul>`;
+  h += routed.length
+    ? routed.map(f => `<li><span>${esc(f.message)}<span class="code">${esc(f.code)}</span></span><span class="who">${f.approvers.map(a => `<span class="role">${esc(role(a))}</span>`).join("")}</span></li>`).join("")
+    : `<li class="n"><span>None. Nothing in this deal needs an approver.</span></li>`;
+  h += `</ul></div>`;
+
+  const notes = q.flags.filter(f => !(f.approvers && f.approvers.length) && (f.severity === "info" || f.severity === "check"));
+  if (notes.length){
+    h += `<div class="part"><h3>Notes on this quote</h3><ul>` +
+      notes.map(f => `<li class="n"><span class="sev sev-${f.severity}">${f.severity}</span><span>${esc(f.message)}<span class="code">${esc(f.code)}</span></span></li>`).join("") + `</ul></div>`;
+  }
+  h += `</div>`;
+
+  const appr = q.approvers.map(role);
+  const decision = {
+    ready: "Ready to send. No approval needed.",
+    needs_approval: `Goes to ${esc(appr.join(", "))} for approval.`,
+    blocked: "Blocked. It can't be quoted as asked.",
+    needs_info: "Back to the rep. The rep needs to supply or restate something first.",
+  }[q.status] || esc(q.status);
+  h += `<dl class="route"><dt>Routing</dt><dd><b>${decision}</b></dd><dt>Approvers</dt><dd>${appr.length ? esc(appr.join(", ")) : "None"}</dd><dt>Could auto-approve after pilot month 1</dt><dd>${q.auto_approve_eligible ? "Yes" : "No"}</dd></dl>`;
+  h += live
+    ? `<p class="prov live"><i aria-hidden="true"></i>Quoted live in your browser by quoter/engine.py. Nothing is sent anywhere.</p>`
+    : `<p class="prov"><i aria-hidden="true"></i>Precomputed by the same interpreter and engine (scripts/build_examples.py). ${failed ? "Python did not load, so this is the saved result." : "Python is loading, and this example will be re-quoted live in your browser when it is ready."}</p>`;
+  return h;
+}
+
+function renderSpec(spec){
+  $("#kv").innerHTML = ORDER.filter(k => k in spec).map(k => {
+    const v = spec[k];
+    let shown = v === null ? `<span class="nul">null</span>` : esc(JSON.stringify(v));
+    if (k === "unparsed" && v && v.length) shown = `<span class="miss">${shown}</span>`;
+    return `<dt>${k}</dt><dd>${shown}</dd>`;
+  }).join("");
+}
+
+function show(spec, quote, live){
+  $("#quotecard").classList.remove("stale");
+  $("#quotecard").innerHTML = renderQuote(spec, quote, live);
+  renderSpec(spec);
+  markChip();
+}
+
+function setMsg(cls, text){
+  const m = $("#loadmsg");
+  m.className = "loadmsg " + cls;
+  m.querySelector("span").textContent = text;
+}
+
+function run(){
+  const p = $("#prompt").value.trim();
+  if (!p) return;
+  if (!py){
+    const ex = EXAMPLES.find(e => e.prompt === p);
+    if (ex){ pending = false; show(ex.spec, ex.quote, false); return; }
+    if (failed){ markChip(); setMsg("err", "Python did not load, so only the examples can be shown here. Reload the page, or run quote.py from the repo for your own deal."); return; }
+    pending = true;
+    $("#quotecard").classList.add("stale");
+    markChip();
+    setMsg("busy", "Python is still loading. Your deal will be quoted as soon as it is ready.");
+    return;
+  }
+  try{
+    const res = JSON.parse(py.globals.get("quote_json")(p));
+    show(res.spec, res.quote, true);
+  }catch(e){
+    $("#quotecard").classList.remove("stale");
+    $("#quotecard").innerHTML = `<div class="empty"><b>Something went wrong reading that deal</b>${esc(e.message.split("\n").slice(-2).join(" "))}</div>`;
+  }
+}
+
 async function boot(){
   try{
-    py = await loadPyodide();
-    py.FS.mkdirTree("/app/quoter"); py.FS.mkdirTree("/app/data");
-    py.FS.writeFile("/app/quoter/__init__.py", "");
-    for (const f of FILES){
-      const r = await fetch(f, {cache: "no-cache"});
-      if (!r.ok) throw new Error("Could not load " + f);
-      py.FS.writeFile("/app/" + f, await r.text());
-    }
-    py.runPython(`
+    py = await loadPyodide().then(async pyo => {
+      pyo.FS.mkdirTree("/app/quoter"); pyo.FS.mkdirTree("/app/data");
+      pyo.FS.writeFile("/app/quoter/__init__.py", "");
+      for (const f of FILES){
+        const r = await fetch(f, {cache: "no-cache"});
+        if (!r.ok) throw new Error("Could not load " + f);
+        pyo.FS.writeFile("/app/" + f, await r.text());
+      }
+      pyo.runPython(`
 import sys, json
 sys.path.insert(0, "/app")
 from quoter.engine import build_quote
@@ -200,64 +429,24 @@ def quote_json(prompt):
     q = build_quote(spec)
     return json.dumps({"spec": spec.__dict__, "quote": q.to_dict()})
 `);
-    $("#loadmsg").textContent = "Ready. Runs entirely in your browser.";
-    $("#go").disabled = false;
+      return pyo;
+    });
+    setMsg("ok", "Ready. Runs entirely in your browser.");
     run();
   }catch(e){
-    $("#loadmsg").textContent = "Python failed to load: " + e.message + ". Reload the page, or run quote.py from the repo.";
+    py = null; failed = true;
+    setMsg("err", "Python failed to load: " + e.message + ". Reload the page, or run quote.py from the repo. The examples still show their precomputed quotes.");
+    $("#quotecard").classList.remove("stale");
+    run();
   }
 }
 
-function renderQuote(spec, q){
-  const name = spec.customer || "(customer not named)";
-  let h = `<h3>Quote</h3><div class="qhead"><span class="cust">${esc(name)}</span><span class="pill s-${q.status}">${STATUS[q.status] || q.status}</span></div>`;
-  if (q.product) h += `<div class="code">Plan: <b>${esc(NAMES[q.product] || q.product)}</b></div>`;
-  if (q.lines.length){
-    h += `<table class="lines"><tbody>` + q.lines.map(l =>
-      `<tr><td>${esc(l.description)}<span class="src">${esc(l.qty)} × ${money(l.unit_price)} per ${esc(l.unit)} · ${esc(l.source)}</span></td><td class="amt">${money(l.amount_year)}/yr</td></tr>`).join("") + `</tbody></table>`;
-  }
-  if (q.year1_total != null){
-    const yrs = q.contract_total && q.year1_total ? Math.round(q.contract_total / q.year1_total) : 1;
-    h += `<div class="totals"><div><b>${money(q.year1_total)}</b><span>Year 1${q.discount_pct ? " after " + q.discount_pct + "% off" : ""}</span></div><div><b>${money(q.contract_total)}</b><span>Contract (${yrs} yr)</span></div></div>`;
-  } else {
-    h += `<p class="nototal">No total shown: ${q.status === "blocked" ? "the deal can't be quoted as asked" : q.status === "needs_info" ? "the rep needs to answer the question below first" : "deal desk sets part of the price"}.</p>`;
-  }
-  if (q.credits.length){
-    h += `<div class="credits"><b>Credits:</b> ` + q.credits.map(c => esc(c.reason) + (c.credits != null ? ` (${c.credits} credits)` : "")).join("; ") + `. PagerDuty doesn't publish a credit rate, so deal desk sets it.</div>`;
-  }
-  if (q.flags.length){
-    h += `<ul class="flags">` + q.flags.map(f => `<li><span class="sev sev-${f.severity}">${f.severity}</span><span>${esc(f.message)} <span class="code">${esc(f.code)}</span></span></li>`).join("") + `</ul>`;
-  }
-  const appr = q.approvers.length ? q.approvers.map(a => APPROVER[a] || a).join(", ") : "None";
-  h += `<div class="appr"><span><b>Approvers:</b> ${esc(appr)}</span><span><b>Could auto-approve after pilot month 1:</b> ${q.auto_approve_eligible ? "Yes" : "No"}</span></div>`;
-  return h;
-}
-
-function renderSpec(spec){
-  const order = ["customer","product","legacy_plan","users","stakeholders","billing","term_years","discount_pct","payment_terms_days","price_lock","close_date","events_year","ai_actions_year","addons","unparsed"];
-  const lines = order.filter(k => k in spec).map(k => {
-    const v = spec[k];
-    const shown = v === null ? `<span class="nul">null</span>` : esc(JSON.stringify(v));
-    return `<span class="k">${k}:</span> ${shown}`;
-  });
-  return `<h3>Deal record the interpreter extracted</h3><pre class="spec">${lines.join("\n")}</pre><p class="note">This is all the pricing engine sees. There are no prices in it.</p>`;
-}
-
-function run(){
-  if (!py) return;
-  const p = $("#prompt").value.trim();
-  if (!p) return;
-  try{
-    const res = JSON.parse(py.globals.get("quote_json")(p));
-    $("#quotecard").innerHTML = renderQuote(res.spec, res.quote);
-    $("#speccard").innerHTML = renderSpec(res.spec);
-  }catch(e){
-    $("#quotecard").innerHTML = `<h3>Quote</h3><p class="placeholder">Something went wrong reading that deal: ${esc(e.message.split("\n").slice(-2).join(" "))}</p>`;
-  }
-}
 $("#go").addEventListener("click", run);
-$("#prompt").addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) run(); });
-boot();
+$("#prompt").addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)){ e.preventDefault(); run(); } });
+$("#prompt").addEventListener("input", markChip);
+run();
+if (typeof loadPyodide === "function") boot();
+else { failed = true; setMsg("err", "Python could not be loaded from the CDN. Reload the page, or run quote.py from the repo. The examples still show their precomputed quotes."); run(); }
 </script>
 <!-- demo-chrome --><footer class="demo-foot"><span>A working build by <a href="https://pranavgudise.dev/">Pranav Gudise</a>. Synthetic or public data only.</span><a href="https://github.com/pg2342-hub/prompt-to-quote">github.com/pg2342-hub/prompt-to-quote</a></footer><!-- /demo-chrome -->
 </body>
